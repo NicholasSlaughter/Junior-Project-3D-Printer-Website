@@ -1,0 +1,55 @@
+﻿@page
+@model JPWeb.UI.Pages.Requests.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Requests</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Requests.Id" />
+            <div class="form-group">
+                <label asp-for="Requests.ApplicationUserId" class="control-label"></label>
+                <input asp-for="Requests.ApplicationUserId" class="form-control" />
+                <span asp-validation-for="Requests.ApplicationUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Requests.ProjectName" class="control-label"></label>
+                <input asp-for="Requests.ProjectName" class="form-control" />
+                <span asp-validation-for="Requests.ProjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Requests.ProjectFilePath" class="control-label"></label>
+                <input asp-for="Requests.ProjectFilePath" class="form-control" />
+                <span asp-validation-for="Requests.ProjectFilePath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Requests.DateTime" class="control-label"></label>
+                <input asp-for="Requests.DateTime" class="form-control" />
+                <span asp-validation-for="Requests.DateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Requests.ProjectDescript" class="control-label"></label>
+                <input asp-for="Requests.ProjectDescript" class="form-control" />
+                <span asp-validation-for="Requests.ProjectDescript" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

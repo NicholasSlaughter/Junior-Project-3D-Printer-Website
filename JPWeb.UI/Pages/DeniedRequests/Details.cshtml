@@ -1,0 +1,55 @@
+﻿@page
+@model JPWeb.UI.Pages.DeniedRequests.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Request</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Request.printer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Request.printer.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Request.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Request.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Request.ProjectName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Request.ProjectName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Request.ProjectFilePath)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Request.ProjectFilePath)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Request.DateTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Request.DateTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Request.ProjectDescript)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Request.ProjectDescript)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Request.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

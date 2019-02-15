@@ -1,0 +1,66 @@
+﻿@page
+@model JPWeb.UI.Pages.AdminRequests.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Request[0].printer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Request[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Request[0].ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Request[0].ProjectFilePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Request[0].DateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Request[0].ProjectDescript)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Request) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.printer.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectFilePath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectDescript)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
