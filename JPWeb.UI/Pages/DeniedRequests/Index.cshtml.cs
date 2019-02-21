@@ -26,7 +26,10 @@ namespace JPWeb.UI.Pages.DeniedRequests
         public async Task OnGetAsync()
         {
             Request = await _context.Requests
-                .Include(r => r.printer).ToListAsync();
+                .Include(r => r.printer)
+                .Include(c => c.Status)
+                .Where(c => c.Status.name.Equals("Denied")) //Only shows denied requests
+                .ToListAsync();
         }
     }
 }

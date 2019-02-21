@@ -31,6 +31,7 @@ namespace JPWeb.UI.Pages.ApprovedRequests
             }
 
             Request = await _context.Requests
+                .Include(c => c.Status)
                 .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Request == null)
@@ -38,15 +39,16 @@ namespace JPWeb.UI.Pages.ApprovedRequests
                 return NotFound();
             }
            ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Id");
+           ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "name");
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
             _context.Attach(Request).State = EntityState.Modified;
 

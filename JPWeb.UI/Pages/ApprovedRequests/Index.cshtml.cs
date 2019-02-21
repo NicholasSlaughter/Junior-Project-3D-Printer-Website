@@ -26,7 +26,10 @@ namespace JPWeb.UI.Pages.ApprovedRequests
         public async Task OnGetAsync()
         {
             Request = await _context.Requests
-                .Include(r => r.printer).ToListAsync();
+                .Include(r => r.printer)
+                .Include(c => c.Status)
+                .Where(c => c.Status.name.Equals("Approved")) //Only shows approved requests
+                .ToListAsync();
         }
     }
 }
