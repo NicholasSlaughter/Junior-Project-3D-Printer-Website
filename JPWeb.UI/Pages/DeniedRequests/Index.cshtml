@@ -7,9 +7,6 @@
 
 <h2>Index</h2>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -41,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.printer.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @Html.DisplayFor(modelItem => item.Status.name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectName)

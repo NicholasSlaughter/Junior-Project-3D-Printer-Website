@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 
-namespace JPWeb.UI.Pages.AdminRequests
+namespace JPWeb.UI.Pages.Printers
 {
     public class CreateModel : PageModel
     {
@@ -21,12 +21,11 @@ namespace JPWeb.UI.Pages.AdminRequests
 
         public IActionResult OnGet()
         {
-        ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Id");
             return Page();
         }
 
         [BindProperty]
-        public Request Request { get; set; }
+        public Printer Printer { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -35,7 +34,7 @@ namespace JPWeb.UI.Pages.AdminRequests
                 return Page();
             }
 
-            _context.Requests.Add(Request);
+            _context.Printers.Add(Printer);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
