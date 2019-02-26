@@ -1,0 +1,40 @@
+﻿@page
+@model JPWeb.UI.Pages.Messages.testPageModel
+@{
+    ViewData["Title"] = "testPage";
+}
+
+<h3>ZA WARUDO</h3>
+<image src="https://media1.tenor.com/images/162e6417f80df31ff2fcf72680f0424c/tenor.gif?itemid=13569904">
+    </a>
+    <li><a asp-page="/Messages/Index">See Messages</a></li>
+
+
+
+<h4>Requests</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="Requests.ApplicationUserId" class="control-label"></label>
+                <input asp-for="Requests.ApplicationUserId" class="form-control" />
+                <span asp-validation-for="Requests.ApplicationUserId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Messages.MessageTitle" class="control-label"></label>
+                <input asp-for="Messages.MessageTitle" class="form-control" />
+                <span asp-validation-for="Messages.MessageTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Messages.MessageBody" class="control-label"></label>
+                <input asp-for="Messages.MessageBody" class="form-control" />
+                <span asp-validation-for="Messages.MessageBody" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

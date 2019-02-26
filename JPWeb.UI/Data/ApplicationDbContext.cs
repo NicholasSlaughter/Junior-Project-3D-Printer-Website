@@ -16,5 +16,7 @@ namespace JPWeb.UI.Data
         public DbSet<JPWeb.UI.Data.Model.Request> Requests { get; set; }
         public DbSet<Printer> Printers { get; set; }
         public DbSet<Status> Statuses { get; set; }
+
+        public DbSet<JPWeb.UI.Data.Model.Message> Messages { get; set; }
     }
 }

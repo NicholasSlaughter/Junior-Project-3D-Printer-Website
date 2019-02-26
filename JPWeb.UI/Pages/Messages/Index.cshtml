@@ -5,12 +5,59 @@
 }
 
 <h2>Messages</h2>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Messages[0].userName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Messages[0].MessageTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Messages[0].MessageBody)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Messages)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.userName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MessageTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MessageBody)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-</body>
-</html>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User<!--Html.DisplayNameFor(model => model.Requests[0].ApplicationUserId) -->
+            </th>
+            <th>
+                Project<!--Html.DisplayNameFor(model => model.Requests[0].Status)-->
+            </th>
+            <th>
+                Messages<!--Html.DisplayNameFor(model => model.Requests[0].ProjectName)-->
+
+            <th></th>
+        </tr>
+    </thead>
+    <tr><td colspan="3"><button class="Yeet" style="background-color: white; color: black; border: 2px solid #008CBA">Samewise___________________________________3D Carrot_____________________________________3</button></td></tr>
+    <tr><td colspan="3"><button class="Yeet" style="background-color: white; color: black; border: 2px solid #008CBA">Merry______________________________________2nd Beakfast________________________________3</button></td></tr>
+    <tr><td colspan="3"><button class="Yeet" style="background-color: white; color: black; border: 2px solid #008CBA">peregrin___________________________________Potato_______________________________________3</button></td></tr>
+
+</table>
