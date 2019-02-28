@@ -11,9 +11,17 @@ namespace JPWeb.UI.Data.Model
         public int messageId { get; set; }
         [MaxLength(50)]
         public string userName { get; set; }
-       // public ICollection<string> MessageBody { get; set; } = new List<string>();
-        public string MessageBody { get; set; } 
-        public DateTime CreationDate { get; set; }
+        public ICollection<msg> MessageBody { get; set; } = new List<msg>();
+        //public string MessageBody { get; set; } 
+        public DateTime LatestMsg { get; set; }
         public string MessageTitle { get; set; } 
+    }
+    public class msg
+    {
+        public int msgId { get; set; }
+        public string user { get; set; }
+        public string _msg { get; set; }
+
+        public DateTime timeSent { get; set; }
     }
 }

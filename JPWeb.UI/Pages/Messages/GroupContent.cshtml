@@ -1,0 +1,42 @@
+﻿@page
+@model JPWeb.UI.Pages.Messages.GroupContentModel
+@{
+    ViewData["Title"] = "GroupContent";
+}
+
+
+<h2>Messages</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.Display("Time Sent")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserMessage.userName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserMessage.MessageBody)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Msgs)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.timeSent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._msg)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

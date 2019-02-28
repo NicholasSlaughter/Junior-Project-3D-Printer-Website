@@ -40,8 +40,8 @@ namespace JPWeb.UI.Pages.Messages
             }
             
             Messages.userName = user.UserName;
-            Messages.CreationDate = DateTime.Now;
-
+            Messages.LatestMsg = DateTime.Now;
+            Messages.MessageBody.Add(new msg { _msg = "Yare yare" });
             _context.Messages.Add(Messages);
             await _context.SaveChangesAsync();
 

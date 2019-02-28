@@ -18,12 +18,12 @@
                 @Html.DisplayNameFor(model => model.Messages[0].MessageTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Messages[0].MessageBody)
+                @Html.DisplayNameFor(model => model.Messages[0].LatestMsg)
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="table">
         @foreach (var item in Model.Messages)
         {
             <tr>
@@ -34,13 +34,23 @@
                     @Html.DisplayFor(modelItem => item.MessageTitle)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MessageBody)
+                    @Html.DisplayFor(modelItem => item.LatestMsg)
+
+                    <a asp-page="/Messages/viewMessage" asp-route-id="@item.userName">Edit</a>
+
                 </td>
             </tr>
         }
     </tbody>
 </table>
+</a>
+<li><a asp-page="/Messages/GroupContent">Click ME</a></li>
 
+<form asp-page-handler="view" method="post">
+    <button class="Yeet" style="background-color: white; color: black; border: 2px solid #008CBA" asp-page="./GroupContent" asp-> Bilbo </button>
+    <input type="hidden" name="username_" value="bb@gmail.com" />
+
+</form>
 <table class="table">
     <thead>
         <tr>

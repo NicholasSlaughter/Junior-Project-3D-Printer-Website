@@ -23,6 +23,7 @@ namespace JPWeb.UI.Pages.Messages
         {
             _context = context;
             _userManager = userManager;
+           
         }
 
         public IList<Message> Messages { get; set; }
@@ -30,8 +31,7 @@ namespace JPWeb.UI.Pages.Messages
         {
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
 
-            Messages = await _context.Messages            
-                .Where(c => c.userName.Equals(user.UserName))
+            Messages = await _context.Messages                  
                 .ToListAsync();
         }
     }

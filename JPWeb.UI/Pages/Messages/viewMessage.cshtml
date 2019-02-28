@@ -1,0 +1,21 @@
+﻿@page
+@model JPWeb.UI.Pages.Messages.BIGGAYModel
+@{
+    ViewData["Title"] = "BIGGAY";
+}
+
+<h2>BIGGAY</h2>
+
+
+<div>
+    <h4>Request</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Request.userName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Request.userName)
+        </dd>
+    </dl>
+</div>

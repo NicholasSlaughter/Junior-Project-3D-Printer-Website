@@ -4,14 +4,16 @@ using JPWeb.UI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JPWeb.UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190228013028_msgV3")]
+    partial class msgV3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,7 +86,7 @@ namespace JPWeb.UI.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("LatestMsg");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("MessageTitle");
 
@@ -105,8 +107,6 @@ namespace JPWeb.UI.Data.Migrations
                     b.Property<string>("_msg");
 
                     b.Property<int?>("messageId");
-
-                    b.Property<DateTime>("timeSent");
 
                     b.Property<string>("user");
 
