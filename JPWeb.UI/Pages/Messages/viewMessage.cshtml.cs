@@ -7,15 +7,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
+using Microsoft.AspNetCore.Identity;
 
 namespace JPWeb.UI.Pages.Messages
 {
-    public class BIGGAYModel : PageModel
+    public class viewMessageModel : PageModel
     {
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public BIGGAYModel(JPWeb.UI.Data.ApplicationDbContext context)
+        public viewMessageModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -27,6 +30,13 @@ namespace JPWeb.UI.Pages.Messages
             {
                 return NotFound();
                 
+            }
+
+            if(id == "fb@oit.edu")
+            {
+
+                return NotFound();
+
             }
 
             Request = await _context.Messages
