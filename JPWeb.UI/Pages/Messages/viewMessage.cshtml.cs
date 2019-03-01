@@ -32,7 +32,7 @@ namespace JPWeb.UI.Pages.Messages
                 
             }
 
-            if(id == "fb@oit.edu")
+            if(id != "fb@oit.edu")
             {
 
                 return NotFound();
