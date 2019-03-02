@@ -1,21 +1,59 @@
 ﻿@page
 @model JPWeb.UI.Pages.Messages.viewMessageModel
 @{
-    ViewData["Title"] = "BIGGAY";
+    ViewData["Title"] = "viewMessages";
 }
 
-<h2>BIGGAY</h2>
+<br />
+<br />
+<br />
+<h2>Messages</h2>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.msgs[0].user)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.msgs[0]._msg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.msgs[0].timeSent)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="table">
+        @foreach (var item in Model.msgs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._msg)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.timeSent)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-<div>
-    <h4>Request</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Request.userName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Request.userName)
-        </dd>
-    </dl>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">     
+                <input asp-for="msgs._msg" class="form-control" />
+                <span asp-validation-for="Messages.MessageTitle" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
 </div>

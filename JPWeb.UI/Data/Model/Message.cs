@@ -18,6 +18,8 @@ namespace JPWeb.UI.Data.Model
     }
     public class msg
     {
+        public int messageId { get; set; }
+        public Message message { get; set; }
         public int msgId { get; set; }
         public string user { get; set; }
         public string _msg { get; set; }

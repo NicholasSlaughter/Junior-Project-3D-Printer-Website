@@ -23,7 +23,9 @@ namespace JPWeb.UI.Pages.Messages
         }
 
         public Message Request { get; set; }
+        public IList<msg> msgs { get; set; }
 
+        public msg msg { get; set; }
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
@@ -32,21 +34,39 @@ namespace JPWeb.UI.Pages.Messages
                 
             }
 
-            if(id != "fb@oit.edu")
-            {
-
-                return NotFound();
-
-            }
+            //var messages = _context.Messages.Include(l => l.MessageBody).ToList();
 
             Request = await _context.Messages
-                .Include(r => r.userName).FirstOrDefaultAsync(m => m.userName == id);
+                .Include(l => l.MessageBody).FirstOrDefaultAsync(m => m.messageId == 4); //dont forget to change me
+
+            msgs = Request.MessageBody.ToList();
 
             if (Request == null)
             {
                 return NotFound();
             }
             return Page();
+        }
+        public async Task<IActionResult> OnPostAsync()
+        {
+           var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            msg.user = user.UserName;
+            msg.timeSent = DateTime.Now;
+
+
+
+
+            //Messages.MessageBody.Add(new msg { _msg = "Yare yare" });
+            //_context.Messages.Add(Messages);
+           // await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
         }
     }
 }
