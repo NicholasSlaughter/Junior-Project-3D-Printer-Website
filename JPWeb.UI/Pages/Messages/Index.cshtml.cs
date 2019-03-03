@@ -26,12 +26,12 @@ namespace JPWeb.UI.Pages.Messages
            
         }
 
-        public IList<Message> Messages { get; set; }
+        public IList<MessageHub> Messages { get; set; }
         public async Task OnGetAsync()
         {
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
 
-            Messages = await _context.Messages                  
+            Messages = await _context.Messages
                 .ToListAsync();
         }
     }

@@ -12,10 +12,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Messages[0].userName)
+                @Html.DisplayNameFor(model => model.Messages[0].email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Messages[0].MessageTitle)
+                @Html.DisplayNameFor(model => model.Messages[0].hubTitle)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Messages[0].LatestMsg)
@@ -28,46 +28,18 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.userName)
+                    @Html.DisplayFor(modelItem => item.email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MessageTitle)
+                    @Html.DisplayFor(modelItem => item.hubTitle)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LatestMsg)
 
-                    <a asp-page="/Messages/viewMessage" asp-route-id="@item.userName">Edit</a>
+                    <a asp-page="/Messages/viewMessage" asp-route-id="@item.messageHubId">Message</a>
 
                 </td>
             </tr>
         }
     </tbody>
-</table>
-</a>
-<li><a asp-page="/Messages/GroupContent">Click ME</a></li>
-
-<form asp-page-handler="view" method="post">
-    <button class="Yeet" style="background-color: white; color: black; border: 2px solid #008CBA" asp-page="./GroupContent" asp-> Bilbo </button>
-    <input type="hidden" name="username_" value="bb@gmail.com" />
-
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                User<!--Html.DisplayNameFor(model => model.Requests[0].ApplicationUserId) -->
-            </th>
-            <th>
-                Project<!--Html.DisplayNameFor(model => model.Requests[0].Status)-->
-            </th>
-            <th>
-                Messages<!--Html.DisplayNameFor(model => model.Requests[0].ProjectName)-->
-
-            <th></th>
-        </tr>
-    </thead>
-    <tr><td colspan="3"><button class="Yeet" style="background-color: white; color: black; border: 2px solid #008CBA">Samewise___________________________________3D Carrot_____________________________________3</button></td></tr>
-    <tr><td colspan="3"><button class="Yeet" style="background-color: white; color: black; border: 2px solid #008CBA">Merry______________________________________2nd Beakfast________________________________3</button></td></tr>
-    <tr><td colspan="3"><button class="Yeet" style="background-color: white; color: black; border: 2px solid #008CBA">peregrin___________________________________Potato_______________________________________3</button></td></tr>
-
 </table>

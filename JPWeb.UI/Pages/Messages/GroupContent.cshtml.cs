@@ -34,15 +34,15 @@ namespace JPWeb.UI.Pages.Messages
         //    _userManager = userManager;
         //    _username = userName;
         //}
-        public Message UserMessage { get; set; }
-        public ICollection<msg> Msgs { get; set; }
+        public MessageHub UserMessage { get; set; }
+        public ICollection<Message> Msgs { get; set; }
         public async Task OnGetAsync()
         {
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
 
 
             UserMessage = await _context.Messages
-                .FirstOrDefaultAsync(c => c.userName.Equals(User.Identity.Name));
+                .FirstOrDefaultAsync(c => c.email.Equals(User.Identity.Name));
 
             //Msgs = UserMessage.MessageBody;
 

@@ -29,7 +29,7 @@ namespace JPWeb.UI.Pages.Requests
 
         [BindProperty]
         public Request Requests { get; set; }
-
+       
         public async Task<IActionResult> OnPostAsync()
         {
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
@@ -43,6 +43,7 @@ namespace JPWeb.UI.Pages.Requests
             Requests.StatusId = _context.Statuses.SingleOrDefault(c => c.name.Equals("Pending")).Id;
 
             _context.Requests.Add(Requests);
+            
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

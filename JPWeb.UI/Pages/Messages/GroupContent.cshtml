@@ -13,10 +13,10 @@
                 @Html.Display("Time Sent")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserMessage.userName)
+                @Html.DisplayNameFor(model => model.UserMessage.email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserMessage.MessageBody)
+                @Html.DisplayNameFor(model => model.UserMessage.Messages)
             </th>
             <th></th>
         </tr>
@@ -30,10 +30,10 @@
                     @Html.DisplayFor(modelItem => item.timeSent)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.user)
+                    @Html.DisplayFor(modelItem => item.sender)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item._msg)
+                    @Html.DisplayFor(modelItem => item.body)
                 </td>
             </tr>
         }

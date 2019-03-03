@@ -13,10 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.msgs[0].user)
+                @Html.DisplayNameFor(model => model.msgs[0].sender)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.msgs[0]._msg)
+                @Html.DisplayNameFor(model => model.msgs[0].body)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.msgs[0].timeSent)
@@ -29,10 +29,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.user)
+                    @Html.DisplayFor(modelItem => item.sender)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item._msg)
+                    @Html.DisplayFor(modelItem => item.body)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.timeSent)
@@ -47,8 +47,8 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">     
-                <input asp-for="msgs._msg" class="form-control" />
-                <span asp-validation-for="Messages.MessageTitle" class="text-danger"></span>
+                <input asp-for="newMsg.body" class="form-control" />
+                <span asp-validation-for="newMsg.body" class="text-danger"></span>
             </div>
 
             <div class="form-group">

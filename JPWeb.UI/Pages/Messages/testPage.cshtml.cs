@@ -28,7 +28,7 @@ namespace JPWeb.UI.Pages.Messages
 
 
         [BindProperty]
-        public Message Messages { get; set; }
+        public MessageHub Messages { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -39,9 +39,9 @@ namespace JPWeb.UI.Pages.Messages
                 return Page();
             }
             
-            Messages.userName = user.UserName;
+            Messages.email = user.UserName;
             Messages.LatestMsg = DateTime.Now;
-            Messages.MessageBody.Add(new msg { _msg = "Yare yare" });
+            Messages.Messages.Add(new Message { body = "Yare yare" });
             _context.Messages.Add(Messages);
             await _context.SaveChangesAsync();
 
