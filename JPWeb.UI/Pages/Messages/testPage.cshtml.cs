@@ -9,27 +9,27 @@ using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Identity;
 
-namespace JPWeb.UI.Pages.Requests
+namespace JPWeb.UI.Pages.Messages
 {
-    public class CreateModel : PageModel
+    public class testPageModel : PageModel
     {
+
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public CreateModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public testPageModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _context = context;
         }
-
         public IActionResult OnGet()
         {
             return Page();
         }
 
+
         [BindProperty]
-        public Request Requests { get; set; }
-       
+        public MessageHub Messages { get; set; }
+
         public async Task<IActionResult> OnPostAsync()
         {
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
@@ -38,12 +38,11 @@ namespace JPWeb.UI.Pages.Requests
             {
                 return Page();
             }
-
-            Requests.ApplicationUserId = user.Id;
-            Requests.StatusId = _context.Statuses.SingleOrDefault(c => c.name.Equals("Pending")).Id;
-
-            _context.Requests.Add(Requests);
             
+            Messages.email = user.UserName;
+            Messages.LatestMsg = DateTime.Now;
+            Messages.Messages.Add(new Message { body = "Yare yare" });
+            _context.Messages.Add(Messages);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

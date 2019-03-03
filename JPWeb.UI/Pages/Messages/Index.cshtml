@@ -5,12 +5,41 @@
 }
 
 <h2>Messages</h2>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Messages[0].email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Messages[0].hubTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Messages[0].LatestMsg)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="table">
+        @foreach (var item in Model.Messages)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hubTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LatestMsg)
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-</body>
-</html>
+                    <a asp-page="/Messages/viewMessage" asp-route-id="@item.messageHubId">Message</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

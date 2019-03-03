@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+    
+namespace JPWeb.UI.Data.Model
+{
+    public class MessageHub
+    {
+        public int messageHubId { get; set; }
+        [MaxLength(50)]
+        public string email { get; set; }
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
+        //public string MessageBody { get; set; } 
+        public DateTime LatestMsg { get; set; }
+        public string hubTitle { get; set; } 
+    }
+    public class Message
+    {
+        public int messageHubId { get; set; }
+        public MessageHub messageHub { get; set; }
+        public int messageId { get; set; }
+        public string sender { get; set; }
+        public string body { get; set; }
+
+        public DateTime timeSent { get; set; }
+    }
+}

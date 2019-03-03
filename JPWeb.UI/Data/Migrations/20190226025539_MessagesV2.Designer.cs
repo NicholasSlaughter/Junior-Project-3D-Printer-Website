@@ -4,14 +4,16 @@ using JPWeb.UI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JPWeb.UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190226025539_MessagesV2")]
+    partial class MessagesV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,35 +86,16 @@ namespace JPWeb.UI.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("body");
+                    b.Property<DateTime>("CreationDate");
 
-                    b.Property<int>("messageHubId");
+                    b.Property<string>("MessageBody");
 
-                    b.Property<string>("sender");
+                    b.Property<string>("MessageTitle");
 
-                    b.Property<DateTime>("timeSent");
-
-                    b.HasKey("messageId");
-
-                    b.HasIndex("messageHubId");
-
-                    b.ToTable("Message");
-                });
-
-            modelBuilder.Entity("JPWeb.UI.Data.Model.MessageHub", b =>
-                {
-                    b.Property<int>("messageHubId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("LatestMsg");
-
-                    b.Property<string>("email")
+                    b.Property<string>("userName")
                         .HasMaxLength(50);
 
-                    b.Property<string>("hubTitle");
-
-                    b.HasKey("messageHubId");
+                    b.HasKey("messageId");
 
                     b.ToTable("Messages");
                 });
@@ -293,14 +276,6 @@ namespace JPWeb.UI.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("JPWeb.UI.Data.Model.Message", b =>
-                {
-                    b.HasOne("JPWeb.UI.Data.Model.MessageHub", "messageHub")
-                        .WithMany("Messages")
-                        .HasForeignKey("messageHubId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JPWeb.UI.Data.Model.Request", b =>
