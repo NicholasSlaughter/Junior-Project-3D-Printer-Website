@@ -22,7 +22,7 @@ namespace JPWeb.UI.Pages.Messages
             _context = context;
         }
 
-        public MessageHub MessageHub { get; set; }
+        public MessageHubs MessageHub { get; set; }
         public IList<Message> msgs { get; set; }
 
         [BindProperty]
@@ -38,10 +38,10 @@ namespace JPWeb.UI.Pages.Messages
 
             //var messages = _context.Messages.Include(l => l.MessageBody).ToList();
 
-            MessageHub = await _context.Messages
-                .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
+            //MessageHub = await _context.MessageHubs
+            //    .Include(l => l.messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
 
-            msgs = MessageHub.Messages.ToList();
+            //msgs = MessageHub.messages.ToList();
 
             if (MessageHub == null)
             {
@@ -52,25 +52,25 @@ namespace JPWeb.UI.Pages.Messages
         public async Task<IActionResult> OnPostAsync(int? id)
         {
            var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
-           MessageHub = await _context.Messages
-                .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
+           MessageHub = await _context.MessageHubs
+                .Include(l => l.messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
 
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            newMsg.sender = user.UserName;
-            newMsg.timeSent = DateTime.Now;
-            newMsg.messageHub = MessageHub;
-            newMsg.messageHubId = 4;
+            //newMsg.sender = user.UserName;
+            //newMsg.timeSent = DateTime.Now;
+            //newMsg.messageHub = MessageHub;
+            //newMsg.messageHubId = 4;
 
-            MessageHub.Messages.Add(newMsg);
+            //MessageHub.Messages.Add(newMsg);
 
-            _context.Messages.Update(MessageHub);
-            await _context.SaveChangesAsync();
+            //_context.MessageHubs.Update(MessageHub);
+            //await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Messages/viewMessage", new { id = MessageHub.messageHubId });
+            return RedirectToPage("/Messages/viewMessage"); //, new { id = MessageHub.messageHubId });
         }
     }
 }

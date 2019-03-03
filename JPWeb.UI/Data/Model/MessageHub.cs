@@ -11,9 +11,9 @@ namespace JPWeb.UI.Data.Model
         public int messageHubId { get; set; }
         [MaxLength(50)]
         public string email { get; set; }
-        public ICollection<Message> Messages { get; set; } = new List<Message>();
+        public ICollection<Message> messages { get; set; } = new List<Message>();
         //public string MessageBody { get; set; } 
-        public DateTime LatestMsg { get; set; }
+        public DateTime latestMsg { get; set; }
         public string hubTitle { get; set; } 
     }
     public class Message

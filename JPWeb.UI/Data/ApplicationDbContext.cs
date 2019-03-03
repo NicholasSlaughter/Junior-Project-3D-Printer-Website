@@ -17,6 +17,6 @@ namespace JPWeb.UI.Data
         public DbSet<Printer> Printers { get; set; }
         public DbSet<Status> Statuses { get; set; }
 
-        public DbSet<JPWeb.UI.Data.Model.MessageHub> Messages { get; set; }
+        public DbSet<JPWeb.UI.Data.Model.MessageHub> MessageHubs { get; set; }
     }
 }
