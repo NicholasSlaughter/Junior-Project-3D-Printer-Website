@@ -1,13 +1,11 @@
 ﻿@page
-@model JPWeb.UI.Pages.Messages.viewMessageModel
+@model JPWeb.UI.Pages.Messages.userIndexModel
 @{
-    ViewData["Title"] = "viewMessages";
+    ViewData["Title"] = "userIndex";
 }
 
-<br />
-<br />
-<br />
-<h2>Messages</h2>
+<h2>userIndex</h2>
+
 
 <table class="table">
     <thead>
@@ -46,7 +44,7 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">     
+            <div class="form-group">
                 <input asp-for="newMsg.body" class="form-control" />
                 <span asp-validation-for="newMsg.body" class="text-danger"></span>
             </div>

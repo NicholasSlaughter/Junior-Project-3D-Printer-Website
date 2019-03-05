@@ -11,12 +11,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace JPWeb.UI.Pages.Messages
 {
-    public class viewMessageModel : PageModel
+    public class userIndexModel : PageModel
     {
+
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public viewMessageModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public userIndexModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _context = context;
@@ -27,40 +28,40 @@ namespace JPWeb.UI.Pages.Messages
 
         [BindProperty]
         public Message newMsg { get; set; }
-      
-        public async Task<IActionResult> OnGetAsync(int? id)
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (id == null)
+            var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
+            
+            if (user.Email == null)
             {
                 return NotFound();
-                
+
             }
-
-            //var messages = _context.Messages.Include(l => l.MessageBody).ToList();
-
+            
             MessageHub = await _context.Messages
-                .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
+                .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == user.Email); //dont forget to change me
 
             msgs = MessageHub.Messages.ToList();
 
             if (MessageHub == null)
             {
-                return NotFound();  
+                return NotFound();
             }
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync()
         {
-           var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
-           MessageHub = await _context.Messages
-                .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
+            var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
+            MessageHub = await _context.Messages
+                 .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == user.Email); //dont forget to change me
 
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            newMsg.sender = user.UserName;
+            newMsg.sender = user.Email;
             newMsg.timeSent = DateTime.Now;
             newMsg.messageHub = MessageHub;
             newMsg.messageHubId = 4;
@@ -70,7 +71,7 @@ namespace JPWeb.UI.Pages.Messages
             _context.Messages.Update(MessageHub);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Messages/viewMessage", new { id = MessageHub.messageHubId });
+            return RedirectToPage("/Messages/userIndex");
         }
     }
 }
