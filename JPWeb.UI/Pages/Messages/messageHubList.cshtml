@@ -4,7 +4,10 @@
     ViewData["Title"] = "messageHubList";
 }
 
-<h2>Messages</h2>
+<br />
+<br />
+<br />
+<h2>Message Hubs</h2>
 
 <table class="table">
     <thead>
@@ -24,20 +27,20 @@
     <tbody id="table">
         @foreach (var item in Model.Messages)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.hubTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.latestMsg)
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hubTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.latestMsg)
 
-                <a asp-page="/Messages/viewMessage" asp-route-id="@item.messageHubId">Message</a>
+                    <a asp-page="/Messages/viewMessage" asp-route-id="@item.messageHubId">Message</a>
 
-            </td>
-        </tr>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
