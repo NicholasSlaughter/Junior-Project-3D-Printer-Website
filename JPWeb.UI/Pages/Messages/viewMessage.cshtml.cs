@@ -39,7 +39,7 @@ namespace JPWeb.UI.Pages.Messages
             //var messages = _context.Messages.Include(l => l.MessageBody).ToList();
 
             MessageHub = await _context.Messages
-                .OrderBy(i => i.LatestMsg)
+                .OrderBy(i => i.latestMsg)
                 .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
 
             msgs = MessageHub.Messages.OrderByDescending(i => i.messageId).ToList();
@@ -66,7 +66,7 @@ namespace JPWeb.UI.Pages.Messages
             newMsg.messageHub = MessageHub;
             newMsg.messageHubId = 4;
 
-            MessageHub.LatestMsg = DateTime.Now;
+            MessageHub.latestMsg = DateTime.Now;
             MessageHub.Messages.Add(newMsg);
 
             _context.Messages.Update(MessageHub);

@@ -32,7 +32,7 @@ namespace JPWeb.UI.Pages.Messages
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
 
             Messages = await _context.Messages
-                .OrderByDescending(i => i.LatestMsg)
+                .OrderByDescending(i => i.latestMsg)
                 .ToListAsync();
         }
     }

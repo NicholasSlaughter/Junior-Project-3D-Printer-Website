@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.Messages[0].hubTitle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Messages[0].LatestMsg)
+                @Html.DisplayNameFor(model => model.Messages[0].latestMsg)
             </th>
             <th></th>
         </tr>
@@ -32,7 +32,7 @@
                 @Html.DisplayFor(modelItem => item.hubTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LatestMsg)
+                @Html.DisplayFor(modelItem => item.latestMsg)
 
                 <a asp-page="/Messages/viewMessage" asp-route-id="@item.messageHubId">Message</a>
 

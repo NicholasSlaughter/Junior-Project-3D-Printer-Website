@@ -24,11 +24,6 @@ namespace JPWeb.UI.Pages.Requests
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
         [BindProperty]
         public Request Requests { get; set; }
 
@@ -78,7 +73,7 @@ namespace JPWeb.UI.Pages.Requests
                 userHub = new MessageHub();
 
                 userHub.email = userEmail;
-                userHub.LatestMsg = DateTime.Now;
+                userHub.latestMsg = DateTime.Now;
                 userHub.hubTitle = Requests.ProjectName;
                 userHub.Messages.Add(new Message { body = "A NEW PROJECT HAS BEEN SUBMITTED" , timeSent = DateTime.Now });
                 _context.Messages.Add(userHub);
@@ -90,7 +85,7 @@ namespace JPWeb.UI.Pages.Requests
                 userHub = await _context.Messages
                .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == userEmail);
                 userHub.Messages.Add(new Message { body = "A NEW PROJECT HAS BEEN SUBMITTED", timeSent = DateTime.Now });
-                userHub.LatestMsg = DateTime.Now;
+                userHub.latestMsg = DateTime.Now;
                 userHub.hubTitle = Requests.ProjectName;
                 _context.Messages.Update(userHub);
                 await _context.SaveChangesAsync();

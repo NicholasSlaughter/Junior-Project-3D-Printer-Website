@@ -66,7 +66,7 @@ namespace JPWeb.UI.Pages.Messages
             newMsg.messageHub = MessageHub;
             newMsg.messageHubId = 4;
 
-            MessageHub.LatestMsg = DateTime.Now;
+            MessageHub.latestMsg = DateTime.Now;
             MessageHub.Messages.Add(newMsg);
 
             _context.Messages.Update(MessageHub);
