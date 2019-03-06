@@ -31,8 +31,27 @@ namespace JPWeb.UI.Pages.Requests
 
         [BindProperty]
         public Request Requests { get; set; }
-        
+
         public MessageHub userHub { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Requests = await _context.Requests
+                .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id == id);
+
+            if (Requests == null)
+            {
+                return NotFound();
+            }
+            //ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Name");
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
@@ -43,7 +62,9 @@ namespace JPWeb.UI.Pages.Requests
             }
 
             Requests.ApplicationUserId = user.Id;
-            Requests.StatusId = _context.Statuses.SingleOrDefault(c => c.name.Equals("Pending")).Id;
+            Requests.StatusId = _context.Statuses.SingleOrDefault(c => c.Name.Equals("Pending")).Id;
+            Requests.DateMade = DateTime.Now;
+            Requests.Duration = 120;
 
             _context.Requests.Add(Requests);          
             await _context.SaveChangesAsync();

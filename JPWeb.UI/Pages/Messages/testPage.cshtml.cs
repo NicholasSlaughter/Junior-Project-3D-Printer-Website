@@ -40,7 +40,7 @@ namespace JPWeb.UI.Pages.Messages
             }
             
             Messages.email = user.UserName;
-            Messages.LatestMsg = DateTime.Now;
+            Messages.latestMsg = DateTime.Now;
             Messages.Messages.Add(new Message { body = "Yare yare" });
             _context.Messages.Add(Messages);
             await _context.SaveChangesAsync();
