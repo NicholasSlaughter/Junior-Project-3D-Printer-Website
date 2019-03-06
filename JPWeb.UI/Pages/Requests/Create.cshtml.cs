@@ -24,28 +24,30 @@ namespace JPWeb.UI.Pages.Requests
             _context = context;
         }
 
+
+
         [BindProperty]
         public Request Requests { get; set; }
 
         public MessageHub userHub { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> OnGetAsync(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            Requests = await _context.Requests
-                .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id == id);
+        //    Requests = await _context.Requests
+        //        .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Requests == null)
-            {
-                return NotFound();
-            }
-            //ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Name");
-            return Page();
-        }
+        //    if (Requests == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    //ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Name");
+        //    return Page();
+        //}
 
         public async Task<IActionResult> OnPostAsync()
         {
