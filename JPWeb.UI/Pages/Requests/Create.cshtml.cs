@@ -24,7 +24,10 @@ namespace JPWeb.UI.Pages.Requests
             _context = context;
         }
 
-
+        public IActionResult OnGet()
+        {
+            return Page();
+        }
 
         [BindProperty]
         public Request Requests { get; set; }
