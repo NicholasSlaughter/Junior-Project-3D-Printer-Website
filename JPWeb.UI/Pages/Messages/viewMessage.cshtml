@@ -12,41 +12,50 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th width="33%">
                 @Html.DisplayNameFor(model => model.msgs[0].sender)
             </th>
-            <th>
+            <th width="33%">
                 @Html.DisplayNameFor(model => model.msgs[0].body)
             </th>
-            <th>
+            <th width="33%">
                 @Html.DisplayNameFor(model => model.msgs[0].timeSent)
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody id="table">
-        @foreach (var item in Model.msgs)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.sender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.body)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.timeSent)
-                </td>
-            </tr>
-        }
-    </tbody>
 </table>
 
+<div style="height: 500px; overflow: scroll; " id="scrollText">
+    <table class="table">
+
+        <tbody id="table">
+            @foreach (var item in Model.msgs)
+            {
+                <tr>
+                    <td width="33%">
+                        @Html.DisplayFor(modelItem => item.sender)
+                    </td>
+                    <td width="33%">
+                        @Html.DisplayFor(modelItem => item.body)
+                    </td>
+                    <td width="33%">
+                        @Html.DisplayFor(modelItem => item.timeSent)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<br />
+<br />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">     
+            <div class="form-group">
                 <input asp-for="newMsg.body" class="form-control" />
                 <span asp-validation-for="newMsg.body" class="text-danger"></span>
             </div>

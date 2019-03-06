@@ -35,13 +35,14 @@ namespace JPWeb.UI.Pages.Messages
                 return NotFound();
                 
             }
-
+         
             //var messages = _context.Messages.Include(l => l.MessageBody).ToList();
 
             MessageHub = await _context.Messages
+                .OrderBy(i => i.LatestMsg)
                 .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
 
-            msgs = MessageHub.Messages.ToList();
+            msgs = MessageHub.Messages.OrderByDescending(i => i.messageId).ToList();
 
             if (MessageHub == null)
             {
@@ -65,6 +66,7 @@ namespace JPWeb.UI.Pages.Messages
             newMsg.messageHub = MessageHub;
             newMsg.messageHubId = 4;
 
+            MessageHub.LatestMsg = DateTime.Now;
             MessageHub.Messages.Add(newMsg);
 
             _context.Messages.Update(MessageHub);

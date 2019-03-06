@@ -40,9 +40,9 @@ namespace JPWeb.UI.Pages.Messages
             }
             
             MessageHub = await _context.Messages
-                .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == user.Email); //dont forget to change me
+                  .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == user.Email); //dont forget to change me
 
-            msgs = MessageHub.Messages.ToList();
+            msgs = MessageHub.Messages.OrderByDescending(i => i.messageId).ToList();
 
             if (MessageHub == null)
             {
@@ -66,6 +66,7 @@ namespace JPWeb.UI.Pages.Messages
             newMsg.messageHub = MessageHub;
             newMsg.messageHubId = 4;
 
+            MessageHub.LatestMsg = DateTime.Now;
             MessageHub.Messages.Add(newMsg);
 
             _context.Messages.Update(MessageHub);
