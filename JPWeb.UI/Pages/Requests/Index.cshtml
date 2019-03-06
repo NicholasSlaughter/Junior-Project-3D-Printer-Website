@@ -26,7 +26,7 @@
                 @Html.DisplayNameFor(model => model.Requests[0].ProjectFilePath)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Requests[0].DateTime)
+                @Html.DisplayNameFor(model => model.Requests[0].DateRequested)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Requests[0].ProjectDescript)
@@ -41,7 +41,7 @@
             @Html.DisplayFor(modelItem => item.ApplicationUserId)
         </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status.name)
+                @Html.DisplayFor(modelItem => item.Status.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectName)
@@ -50,7 +50,7 @@
                 @Html.DisplayFor(modelItem => item.ProjectFilePath)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateTime)
+                @Html.DisplayFor(modelItem => item.DateRequested)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectDescript)
