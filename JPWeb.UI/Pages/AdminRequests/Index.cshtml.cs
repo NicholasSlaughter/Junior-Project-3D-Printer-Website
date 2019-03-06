@@ -28,7 +28,7 @@ namespace JPWeb.UI.Pages.AdminRequests
             Request = await _context.Requests
                 .Include(r => r.printer)
                 .Include(c => c.Status)
-                .Where(c => c.Status.name.Equals("Pending")) //Only shows pending requests
+                .Where(c => c.Status.Name.Equals("Pending")) //Only shows pending requests
                 .ToListAsync();
         }
     }
