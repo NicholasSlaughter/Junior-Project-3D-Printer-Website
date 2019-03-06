@@ -24,7 +24,7 @@ namespace JPWeb.UI.Pages.Requests
             _context = context;
             _userManager = userManager;
         }
-
+        public string dateSort { get; set; }
         public IList<Request> Requests { get;set; }
 
         public async Task OnGetAsync()
@@ -32,6 +32,7 @@ namespace JPWeb.UI.Pages.Requests
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
 
             Requests = await _context.Requests
+                .OrderByDescending(c => c.Id)
                 .Include(c => c.Status)
                 .Where(c => c.ApplicationUserId.Equals(user.Id))
                 .ToListAsync();

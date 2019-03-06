@@ -9,6 +9,7 @@ using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 
 namespace JPWeb.UI.Pages.Requests
 {
@@ -31,6 +32,8 @@ namespace JPWeb.UI.Pages.Requests
         [BindProperty]
         public Request Requests { get; set; }
 
+        public MessageHub userHub { get; set; }
+
         //public async Task<IActionResult> OnGetAsync(int? id)
         //{
         //    if (id == null)
@@ -45,7 +48,7 @@ namespace JPWeb.UI.Pages.Requests
         //    {
         //        return NotFound();
         //    }
-        //    ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Name");
+        //    //ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Name");
         //    return Page();
         //}
 
@@ -63,9 +66,35 @@ namespace JPWeb.UI.Pages.Requests
             Requests.DateMade = DateTime.Now;
             Requests.Duration = 120;
 
-            _context.Requests.Add(Requests);
-            
+            _context.Requests.Add(Requests);          
             await _context.SaveChangesAsync();
+
+            string userEmail = User.Identity.Name;
+            // int derp = _context.Database.ExecuteSqlCommand("SELECT COUNT(*) FROM MESSAGES WHERE ([email] = @userEmail)", new SqlParameter("@userEmail",userEmail));
+            int derp = _context.Database.ExecuteSqlCommand("UPDATE MESSAGES SET LatestMsg = GETDATE() WHERE ([email] = @userEmail)", new SqlParameter("@userEmail", userEmail));
+            if (derp == 0)
+            {
+                //create new hub for user
+                userHub = new MessageHub();
+
+                userHub.email = userEmail;
+                userHub.latestMsg = DateTime.Now;
+                userHub.hubTitle = Requests.ProjectName;
+                userHub.Messages.Add(new Message { body = "A NEW PROJECT HAS BEEN SUBMITTED" , timeSent = DateTime.Now });
+                _context.Messages.Add(userHub);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                //add message in the user's hub
+                userHub = await _context.Messages
+               .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == userEmail);
+                userHub.Messages.Add(new Message { body = "A NEW PROJECT HAS BEEN SUBMITTED", timeSent = DateTime.Now });
+                userHub.latestMsg = DateTime.Now;
+                userHub.hubTitle = Requests.ProjectName;
+                _context.Messages.Update(userHub);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToPage("./Index");
         }

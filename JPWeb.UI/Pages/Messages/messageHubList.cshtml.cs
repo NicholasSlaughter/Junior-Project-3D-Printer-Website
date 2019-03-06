@@ -14,12 +14,12 @@ using Microsoft.AspNetCore.Http;
 namespace JPWeb.UI.Pages.Messages
 {
     [Authorize(Policy = "UserAndHigherPolicy")]
-    public class IndexModel : PageModel
+    public class messageHubListModel : PageModel
     {
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public IndexModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public messageHubListModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -32,6 +32,7 @@ namespace JPWeb.UI.Pages.Messages
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
 
             Messages = await _context.Messages
+                .OrderByDescending(i => i.latestMsg)
                 .ToListAsync();
         }
     }
