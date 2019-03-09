@@ -13,11 +13,6 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-            <label asp-for="Requests.ApplicationUserId" class="control-label"></label>
-            <input asp-for="Requests.ApplicationUserId" class="form-control" />
-            <span asp-validation-for="Requests.ApplicationUserId" class="text-danger"></span>
-        </div>*@
             <div class="form-group">
                 <label asp-for="Requests.ProjectName" class="control-label"></label>
                 <input asp-for="Requests.ProjectName" class="form-control" />
@@ -28,11 +23,6 @@
                 <input asp-for="Requests.ProjectFilePath" class="form-control" />
                 <span asp-validation-for="Requests.ProjectFilePath" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="Requests.PrinterId" class="control-label"></label>
-                <select asp-for="Requests.PrinterId" class="form-control" asp-items="ViewBag.PrinterId"></select>
-                <span asp-validation-for="Requests.PrinterId" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <label asp-for="Requests.DateRequested" class="control-label"></label>
                 <input asp-for="Requests.DateRequested" class="form-control" />

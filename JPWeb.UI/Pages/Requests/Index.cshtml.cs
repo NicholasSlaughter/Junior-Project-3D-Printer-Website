@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Http;
 
 namespace JPWeb.UI.Pages.Requests
 {
-    [Authorize(Policy = "UserAndHigherPolicy")]
     public class IndexModel : PageModel
     {
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;

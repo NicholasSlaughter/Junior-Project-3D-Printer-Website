@@ -45,11 +45,6 @@ namespace JPWeb.UI.Pages.AdminRequests
 
         public async Task<IActionResult> OnPostAsync()
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
-
             _context.Attach(Request).State = EntityState.Modified;
 
             try

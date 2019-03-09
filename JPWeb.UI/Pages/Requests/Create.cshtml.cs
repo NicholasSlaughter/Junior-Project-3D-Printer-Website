@@ -70,9 +70,9 @@ namespace JPWeb.UI.Pages.Requests
             await _context.SaveChangesAsync();
 
             string userEmail = User.Identity.Name;
-            // int derp = _context.Database.ExecuteSqlCommand("SELECT COUNT(*) FROM MESSAGES WHERE ([email] = @userEmail)", new SqlParameter("@userEmail",userEmail));
-            int derp = _context.Database.ExecuteSqlCommand("UPDATE MESSAGES SET LatestMsg = GETDATE() WHERE ([email] = @userEmail)", new SqlParameter("@userEmail", userEmail));
-            if (derp == 0)
+
+            int temp = _context.Database.ExecuteSqlCommand("UPDATE MESSAGES SET LatestMsg = GETDATE() WHERE ([email] = @userEmail)", new SqlParameter("@userEmail", userEmail));
+            if (temp == 0)
             {
                 //create new hub for user
                 userHub = new MessageHub();
