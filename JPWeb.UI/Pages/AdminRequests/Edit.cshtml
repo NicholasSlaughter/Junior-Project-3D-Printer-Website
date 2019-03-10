@@ -16,12 +16,12 @@
             <input type="hidden" asp-for="Request.Id" />
             @Html.HiddenFor(x => x.Request.ApplicationUserId)
             <div class="form-group">
-                <label asp-for="Request.PrinterId" class="control-label"></label>
+                <label class="control-label">Printer</label>
                 <select asp-for="Request.PrinterId" class="form-control" asp-items="ViewBag.PrinterId"></select>
                 <span asp-validation-for="Request.PrinterId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Request.StatusId" class="control-label"></label>
+                <label class="control-label">Status</label>
                 <select asp-for="Request.StatusId" class="form-control" asp-items="ViewBag.StatusId"></select>
                 <span asp-validation-for="Request.StatusId" class="text-danger"></span>
             </div>
