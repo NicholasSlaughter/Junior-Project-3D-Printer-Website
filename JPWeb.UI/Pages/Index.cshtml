@@ -4,11 +4,8 @@
     ViewData["Title"] = "Home page";
 }
 
-<h2>Home Page</h2>
+<h2>Printers</h2>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -16,10 +13,16 @@
                 @Html.DisplayNameFor(model => model.Printer[0].Name)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Printer[0].Color)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Printer[0].Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Printer[0].Color)
+                @Html.DisplayNameFor(model => model.Printer[0].Requests)
+            </th>
+            <th>
+                <label>Wait Time</label>
             </th>
             <th></th>
         </tr>
@@ -27,22 +30,26 @@
     <tbody>
         @foreach (var item in Model.Printer)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Requests.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.derp)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

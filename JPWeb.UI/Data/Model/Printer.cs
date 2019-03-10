@@ -11,6 +11,7 @@ namespace JPWeb.UI.Data.Model
         public int Id { get; set; }
         [MaxLength(50)]
         public string Name { get; set; }
+        public string derp { get; set; }
         public string Status { get; set; }
         public string Color { get; set; }
         public ICollection<Request> Requests { get; set; } = new List<Request>();
