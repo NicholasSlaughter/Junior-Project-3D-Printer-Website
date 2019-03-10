@@ -33,11 +33,11 @@
         {
             <tr>
                 <td>@user.Id</td>
-                <td>@user.UserName</td>
+                <td>@user.First_Name @user.Last_Name</td>
                 <td>@user.Email</td>
                 <td>
                     <a class="btn btn-success" asp-page="./Edit" asp-route-id="@user.UserName">Edit</a>
-                    <a class="btn btn-danger" asp-page="./Details" asp-route-id="@user.UserName">Details</a>
+                    <a class="btn btn-danger" asp-page="./Details" asp-route-id="@user.UserName">Delete</a>
                 </td>
             </tr>
         }
