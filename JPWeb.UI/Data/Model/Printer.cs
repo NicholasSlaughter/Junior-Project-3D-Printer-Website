@@ -11,10 +11,10 @@ namespace JPWeb.UI.Data.Model
         public int Id { get; set; }
         [Required]
         public int StatusId { get; set; }
-        public Status Status { get; set; }
+        public string Status { get; set; }
         [Required]
         public int ColorId { get; set; }
-        public Color Color { get; set; }
+        public string Color { get; set; }
         [MaxLength(50)]
         public string Name { get; set; }
         public ICollection<Request> Requests { get; set; } = new List<Request>();
