@@ -1,0 +1,46 @@
+﻿@page
+@model JPWeb.UI.Pages.TEMP.DetailsModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+
+<div>
+    <h4>Printer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Printer.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Printer.Status.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Printer.Color)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Printer.Color.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Printer.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Printer.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Printer.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
+</body>
+</html>
