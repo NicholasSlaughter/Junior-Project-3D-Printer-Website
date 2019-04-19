@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Requests.ProjectName" class="control-label"></label>
@@ -19,9 +19,9 @@
                 <span asp-validation-for="Requests.ProjectName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Requests.ProjectFilePath" class="control-label"></label>
-                <input asp-for="Requests.ProjectFilePath" class="form-control" />
-                <span asp-validation-for="Requests.ProjectFilePath" class="text-danger"></span>
+                <label asp-for="ProjectFile" class="control-label"></label>
+                <input type="file" name="ProjectFile" class="form-control" style="height:auto" />
+                <span asp-validation-for="ProjectFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Requests.DateRequested" class="control-label"></label>

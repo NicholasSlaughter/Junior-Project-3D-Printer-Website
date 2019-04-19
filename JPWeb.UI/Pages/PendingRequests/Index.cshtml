@@ -1,14 +1,11 @@
 ﻿@page
-@model JPWeb.UI.Pages.ApprovedRequests.IndexModel
+@model JPWeb.UI.Pages.PendingRequests.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<br />
-<br />
-<br />
-<h2>Approved Requests</h2>
+<h2>Index</h2>
 
 <table class="table">
     <thead>
@@ -35,8 +32,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Request)
-        {
+@foreach (var item in Model.Request) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.printer.Id)
@@ -47,13 +43,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectName)
             </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.ProjectFilePath)
-        </td>*@
             <td>
-                <form asp-page-handler="Download" asp-route-id="@item.Id" method="post">
-                    <button class="btn btn-default">Download</button>
-                </form>
+                @Html.DisplayFor(modelItem => item.ProjectFilePath)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateRequested)
@@ -67,6 +58,6 @@
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-        }
+}
     </tbody>
 </table>

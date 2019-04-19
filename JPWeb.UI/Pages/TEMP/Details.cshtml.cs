@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 
-namespace JPWeb.UI.Pages.AdminRequests
+namespace JPWeb.UI.Pages.TEMP
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace JPWeb.UI.Pages.AdminRequests
             _context = context;
         }
 
-        public Request Request { get; set; }
+        public Printer Printer { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,10 +28,11 @@ namespace JPWeb.UI.Pages.AdminRequests
                 return NotFound();
             }
 
-            Request = await _context.Requests
-                .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id == id);
+            Printer = await _context.Printers
+                .Include(p => p.Color)
+                .Include(p => p.Status).FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Request == null)
+            if (Printer == null)
             {
                 return NotFound();
             }

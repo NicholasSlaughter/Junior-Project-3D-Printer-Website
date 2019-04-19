@@ -18,7 +18,7 @@ namespace JPWeb.UI.Data.Model
         [Required]
         public string ProjectName { get; set; }
 
-        public byte[] ProjectFilePath { get; set; }
+        public string ProjectFilePath { get; set; }
         [Required]
         public DateTime DateRequested { get; set; }
         [Required]

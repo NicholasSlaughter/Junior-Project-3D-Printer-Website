@@ -4,18 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 
-namespace JPWeb.UI.Pages.AdminRequests
+namespace JPWeb.UI.Pages.PendingRequests
 {
-    public class EditModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
 
-        public EditModel(JPWeb.UI.Data.ApplicationDbContext context)
+        public DeleteModel(JPWeb.UI.Data.ApplicationDbContext context)
         {
             _context = context;
         }
@@ -31,44 +30,31 @@ namespace JPWeb.UI.Pages.AdminRequests
             }
 
             Request = await _context.Requests
-                .Include(c => c.Status)
                 .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Request == null)
             {
                 return NotFound();
             }
-           ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Id");
-           ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "name");
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            _context.Attach(Request).State = EntityState.Modified;
-
-            try
+            if (id == null)
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
+
+            Request = await _context.Requests.FindAsync(id);
+
+            if (Request != null)
             {
-                if (!RequestExists(Request.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                _context.Requests.Remove(Request);
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool RequestExists(int id)
-        {
-            return _context.Requests.Any(e => e.Id == id);
         }
     }
 }
