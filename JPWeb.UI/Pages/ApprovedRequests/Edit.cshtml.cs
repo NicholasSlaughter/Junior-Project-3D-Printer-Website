@@ -39,7 +39,7 @@ namespace JPWeb.UI.Pages.ApprovedRequests
                 return NotFound();
             }
            ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Name");
-           ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name");
+            ViewData["StatusId"] = new SelectList(_context.Statuses.ToList().GetRange(0, 4), "Id", "Name");
             return Page();
         }
 

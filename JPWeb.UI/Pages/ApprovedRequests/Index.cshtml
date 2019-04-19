@@ -51,7 +51,7 @@
             @Html.DisplayFor(modelItem => item.ProjectFilePath)
         </td>*@
             <td>
-                <form asp-page-handler="Download" asp-route-id="@item.Id" asp-route-documentType="ProjectFile" method="post">
+                <form asp-page-handler="Download" asp-route-id="@item.Id" method="post">
                     <button class="btn btn-default">Download</button>
                 </form>
             </td>

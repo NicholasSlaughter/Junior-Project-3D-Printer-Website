@@ -39,7 +39,7 @@
                     @{ System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
                         if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
                         {
-                            <li><a asp-page="/AdminRequests/Index">Pending Requests</a></li>
+                            <li><a asp-page="/PendingRequests/Index">Pending Requests</a></li>
                         }}
                     @{ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
                         {

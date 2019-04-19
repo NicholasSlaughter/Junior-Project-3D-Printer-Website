@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
 
 namespace JPWeb.UI.Pages.ApprovedRequests
 {
@@ -30,6 +31,25 @@ namespace JPWeb.UI.Pages.ApprovedRequests
                 .Include(c => c.Status)
                 .Where(c => c.Status.Name.Equals("Approved")) //Only shows approved requests
                 .ToListAsync();
+        }
+
+
+        [HttpPost, ActionName("Download")]
+        public ActionResult OnPostDownload(int id)
+        {
+            var Request = _context.GetRequestById(id);
+            var file = Request.Result.ProjectFilePath;
+
+            var mimeType = "text/plain";
+
+            var memoryStream = new MemoryStream();
+
+            var streamWriter = new StreamWriter(memoryStream);
+
+            streamWriter.WriteLine(file);
+            streamWriter.Flush();
+
+            return File(memoryStream.GetBuffer(), mimeType, "File.txt");
         }
     }
 }
