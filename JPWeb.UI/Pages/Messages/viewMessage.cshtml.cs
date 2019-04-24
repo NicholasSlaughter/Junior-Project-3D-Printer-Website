@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Identity;
+using System.Net.Mail;
+using System.Text;
 
 namespace JPWeb.UI.Pages.Messages
 {
@@ -52,7 +54,8 @@ namespace JPWeb.UI.Pages.Messages
         }
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-           var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
+            
+            var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
            MessageHub = await _context.Messages
                 .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
 
