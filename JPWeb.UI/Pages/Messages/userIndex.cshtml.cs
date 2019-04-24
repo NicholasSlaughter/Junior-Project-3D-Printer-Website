@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Identity;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
+
 
 namespace JPWeb.UI.Pages.Messages
 {
@@ -52,6 +56,38 @@ namespace JPWeb.UI.Pages.Messages
         }
         public async Task<IActionResult> OnPostAsync()
         {
+            SmtpClient mySmtpClient = new SmtpClient("smtp.gmail.com");
+
+            // set smtp-client with basicAuthentication
+            mySmtpClient.UseDefaultCredentials = false;
+            System.Net.NetworkCredential basicAuthenticationInfo = new
+               System.Net.NetworkCredential("thepre.s.q.l@gmail.com", "CST3162018");
+            mySmtpClient.Credentials = basicAuthenticationInfo;
+            mySmtpClient.Port = 465;
+            mySmtpClient.EnableSsl = true;
+
+            // add from,to mailaddresses
+            MailAddress from = new MailAddress("thepre.s.q.l@gmail.com", "Pre SQL");
+            MailAddress to = new MailAddress("thepre.s.q.l@gmail.com", "Joseph Joestar");
+            MailMessage myMail = new System.Net.Mail.MailMessage(from, to);
+
+            // add ReplyTo
+            //MailAddress replyto = new MailAddress("thepre.s.q.l@gmail.com");
+            //myMail.ReplyToList.Add(replyTo);
+
+            // set subject and encoding
+            myMail.Subject = "Test message";
+            myMail.SubjectEncoding = System.Text.Encoding.UTF8;
+
+            // set body-message and encoding
+            myMail.Body = "<b>Test Mail</b><br>using <b>HTML</b>.";
+            myMail.BodyEncoding = System.Text.Encoding.UTF8;
+            // text or html
+            myMail.IsBodyHtml = true;
+
+            
+            await mySmtpClient.SendMailAsync(myMail);
+
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
             MessageHub = await _context.Messages
                  .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == user.Email); //dont forget to change me
