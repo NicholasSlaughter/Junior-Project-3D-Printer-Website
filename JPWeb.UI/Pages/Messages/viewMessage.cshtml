@@ -13,13 +13,13 @@
     <thead>
         <tr>
             <th width="33%">
-                @Html.DisplayNameFor(model => model.msgs[0].sender)
+                @Html.DisplayNameFor(model => model.msgs[0].Sender.Email)
             </th>
             <th width="33%">
-                @Html.DisplayNameFor(model => model.msgs[0].body)
+                @Html.DisplayNameFor(model => model.msgs[0].Body)
             </th>
             <th width="33%">
-                @Html.DisplayNameFor(model => model.msgs[0].timeSent)
+                @Html.DisplayNameFor(model => model.msgs[0].TimeSent)
             </th>
             <th></th>
         </tr>
@@ -34,13 +34,13 @@
             {
                 <tr>
                     <td width="33%">
-                        @Html.DisplayFor(modelItem => item.sender)
+                        @Html.DisplayFor(modelItem => item.Sender.Email)
                     </td>
                     <td width="33%">
-                        @Html.DisplayFor(modelItem => item.body)
+                        @Html.DisplayFor(modelItem => item.Body)
                     </td>
                     <td width="33%">
-                        @Html.DisplayFor(modelItem => item.timeSent)
+                        @Html.DisplayFor(modelItem => item.TimeSent)
                     </td>
                 </tr>
             }
@@ -56,8 +56,8 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input asp-for="newMsg.body" class="form-control" />
-                <span asp-validation-for="newMsg.body" class="text-danger"></span>
+                <input asp-for="newMsg.Body" class="form-control" />
+                <span asp-validation-for="newMsg.Body" class="text-danger"></span>
             </div>
 
             <div class="form-group">

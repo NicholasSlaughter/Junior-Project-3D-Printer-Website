@@ -23,8 +23,7 @@ namespace JPWeb.UI.Pages.Messages
             _userManager = userManager;
             _context = context;
         }
-
-        public MessageHub MessageHub { get; set; }
+       
         public IList<Message> msgs { get; set; }
 
         [BindProperty]
@@ -40,42 +39,43 @@ namespace JPWeb.UI.Pages.Messages
          
             //var messages = _context.Messages.Include(l => l.MessageBody).ToList();
 
-            MessageHub = await _context.Messages
-                .OrderBy(i => i.latestMsg)
-                .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
+            //msgs = await _context.Messages
+            //    .OrderBy(i => i.latestMsg)
+            //    .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
 
-            msgs = MessageHub.Messages.OrderByDescending(i => i.messageId).ToList();
+            //msgs = Messages.Messages.OrderByDescending(i => i.messageId).ToList();
 
-            if (MessageHub == null)
-            {
-                return NotFound();  
-            }
+            //if (Messages == null)
+            //{
+            //    return NotFound();  
+            //}
             return Page();
         }
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            
-            var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
-           MessageHub = await _context.Messages
-                .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
 
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            // var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
+            //Messages = await _context.Messages
+            //     .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
 
-            newMsg.sender = user.UserName;
-            newMsg.timeSent = DateTime.Now;
-            newMsg.messageHub = MessageHub;
-            newMsg.messageHubId = 4;
+            // if (!ModelState.IsValid)
+            // {
+            //     return Page();
+            // }
 
-            MessageHub.latestMsg = DateTime.Now;
-            MessageHub.Messages.Add(newMsg);
+            // newMsg.sender = user.UserName;
+            // newMsg.timeSent = DateTime.Now;
+            // newMsg.messageHub = Messages;
+            // newMsg.messageHubId = 4;
 
-            _context.Messages.Update(MessageHub);
-            await _context.SaveChangesAsync();
+            // Messages.latestMsg = DateTime.Now;
+            // Messages.Messages.Add(newMsg);
 
-            return RedirectToPage("/Messages/viewMessage", new { id = MessageHub.messageHubId });
+            // _context.Messages.Update(Messages);
+            // await _context.SaveChangesAsync();
+            return Page();
+
+            // return RedirectToPage("/Messages/viewMessage", new { id = Messages.messageHubId });
         }
     }
 }

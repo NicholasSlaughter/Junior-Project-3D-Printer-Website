@@ -14,5 +14,6 @@ namespace JPWeb.UI.Data.Model
         [Required, Display(Name = "Last Name"), MaxLength(50)]
         public string Last_Name { get; set; }
         public ICollection<Request> Requests { get; set; } = new List<Request>();
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
 }

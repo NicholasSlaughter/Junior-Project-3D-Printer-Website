@@ -26,8 +26,7 @@ namespace JPWeb.UI.Pages.Messages
             _userManager = userManager;
             _context = context;
         }
-
-        public MessageHub MessageHub { get; set; }
+        
         public IList<Message> msgs { get; set; }
 
         [BindProperty]
@@ -42,13 +41,12 @@ namespace JPWeb.UI.Pages.Messages
                 return NotFound();
 
             }
-            
-            MessageHub = await _context.Messages
-                  .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == user.Email); //dont forget to change me
 
-            msgs = MessageHub.Messages.OrderByDescending(i => i.messageId).ToList();
+            msgs = await _context.Messages.Where(m => m.Sender == user || m.Reciever == user).ToListAsync() ; //.FirstOrDefaultAsync(m => m.Sender == user); //dont forget to change me
 
-            if (MessageHub == null)
+           // msgs = MessageHub.Messages.OrderByDescending(i => i.messageId).ToList();
+
+            if (msgs == null)
             {
                 return NotFound();
             }
@@ -68,7 +66,7 @@ namespace JPWeb.UI.Pages.Messages
             };
 
             
-            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", "wasseem.salame@oit.edu", "RE: Amiibo Clone", newMsg.body.ToString())
+            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", "wasseem.salame@oit.edu", "RE: Amiibo Clone", newMsg.Body.ToString())
             {
                 BodyEncoding = Encoding.UTF8,
                 DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
@@ -77,23 +75,23 @@ namespace JPWeb.UI.Pages.Messages
             client.Send(message);
 
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
-            MessageHub = await _context.Messages
-                 .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == user.Email); //dont forget to change me
+            //MessageHub = await _context.Messages
+            //     .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == user.Email); //dont forget to change me
 
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            newMsg.sender = user.Email;
-            newMsg.timeSent = DateTime.Now;
-            newMsg.messageHub = MessageHub;
-            newMsg.messageHubId = 4;
+            newMsg.Sender = user;
+            newMsg.TimeSent = DateTime.Now;
+            //newMsg.messageHub = MessageHub;
+            //newMsg.messageHubId = 4;
 
-            MessageHub.latestMsg = DateTime.Now;
-            MessageHub.Messages.Add(newMsg);
+            //MessageHub.latestMsg = DateTime.Now;
+            //Messages.Add(newMsg);
 
-            _context.Messages.Update(MessageHub);
+            _context.Messages.Update(newMsg);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Messages/userIndex");

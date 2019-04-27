@@ -11,5 +11,8 @@ namespace JPWeb.UI.Data.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        //icollecrtion of printers and requests
+        public ICollection<Printer> Printers { get; set; } = new List<Printer>();
+        public ICollection<Request> Requests { get; set; } = new List<Request>();
     }
 }

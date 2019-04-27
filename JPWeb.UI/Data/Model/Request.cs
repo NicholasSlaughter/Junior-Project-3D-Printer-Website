@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,6 +10,7 @@ namespace JPWeb.UI.Data.Model
     {
         public int Id { get; set; }
         public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUsers { get; set; }
         public int? PrinterId { get; set; }
         public Printer printer { get; set; }
         [Required]

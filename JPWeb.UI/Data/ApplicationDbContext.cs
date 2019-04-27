@@ -19,7 +19,7 @@ namespace JPWeb.UI.Data
         public DbSet<Printer> Printers { get; set; }
         public DbSet<Status> Statuses { get; set; }
 
-        public DbSet<JPWeb.UI.Data.Model.MessageHub> Messages { get; set; }
+        public DbSet<JPWeb.UI.Data.Model.Message> Messages { get; set; }
 
         public async virtual Task<Request> GetRequestById(int? id)
         {
