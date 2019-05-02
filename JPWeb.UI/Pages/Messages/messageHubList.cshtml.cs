@@ -25,15 +25,14 @@ namespace JPWeb.UI.Pages.Messages
             _userManager = userManager;
            
         }
-
-        public IList<MessageHub> Messages { get; set; }
+        public string LastMessage = "Last Message";
+        public IList<Request> _Requests = new List<Request>();
+        public IList<Message> Messages { get; set; }
         public async Task OnGetAsync()
         {
-            var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
+            // _Requests = await _context.Requests.OrderByDescending(i => i.applicationUser.Messages.LastOrDefault().TimeSent).ToListAsync();
+            _Requests = await _context.Requests.ToListAsync();
 
-            Messages = await _context.Messages
-                .OrderByDescending(i => i.latestMsg)
-                .ToListAsync();
         }
     }
 }

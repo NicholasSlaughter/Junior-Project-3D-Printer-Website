@@ -61,7 +61,7 @@ namespace JPWeb.UI.Pages.Requests
         [BindProperty]
         public Request Requests { get; set; }
 
-        public MessageHub userHub { get; set; }
+        public Message newMsg = new Message();
 
         //public async Task<IActionResult> OnGetAsync(int? id)
         //{
@@ -97,34 +97,16 @@ namespace JPWeb.UI.Pages.Requests
             Requests.ProjectFilePath = ProcessFormFile(ProjectFile);
 
             _context.Requests.Add(Requests);          
+            //await _context.SaveChangesAsync();
+            
+            newMsg.Body = "A NEW PROJECT HAS BEEN SUBMITTED";
+            newMsg.TimeSent = DateTime.Now;
+            newMsg.request = Requests;
+            newMsg.Sender = Requests.applicationUser;
+
+             _context.Messages.Add(newMsg);
             await _context.SaveChangesAsync();
-
-            string userEmail = User.Identity.Name;
-
-            int temp = _context.Database.ExecuteSqlCommand("UPDATE MESSAGES SET LatestMsg = GETDATE() WHERE ([email] = @userEmail)", new SqlParameter("@userEmail", userEmail));
-            if (temp == 0)
-            {
-                //create new hub for user
-                userHub = new MessageHub();
-
-                userHub.email = userEmail;
-                userHub.latestMsg = DateTime.Now;
-                userHub.hubTitle = Requests.ProjectName;
-                userHub.Messages.Add(new Message { body = "A NEW PROJECT HAS BEEN SUBMITTED" , timeSent = DateTime.Now });
-                _context.Messages.Add(userHub);
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                //add message in the user's hub
-                userHub = await _context.Messages
-               .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == userEmail);
-                userHub.Messages.Add(new Message { body = "A NEW PROJECT HAS BEEN SUBMITTED", timeSent = DateTime.Now });
-                userHub.latestMsg = DateTime.Now;
-                userHub.hubTitle = Requests.ProjectName;
-                _context.Messages.Update(userHub);
-                await _context.SaveChangesAsync();
-            }
+           
 
             return RedirectToPage("./Index");
         }
