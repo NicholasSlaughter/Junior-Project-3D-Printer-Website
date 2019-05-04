@@ -103,7 +103,7 @@ namespace JPWeb.UI.Pages.Requests
             newMsg.TimeSent = DateTime.Now;
             newMsg.request = Requests;
             newMsg.Sender = Requests.applicationUser;
-
+            
              _context.Messages.Add(newMsg);
             await _context.SaveChangesAsync();
            

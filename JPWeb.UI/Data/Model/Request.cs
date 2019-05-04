@@ -29,5 +29,6 @@ namespace JPWeb.UI.Data.Model
         [Required]
         public bool PersonalUse { get; set; }
         public double Duration { get; set; }
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
 }

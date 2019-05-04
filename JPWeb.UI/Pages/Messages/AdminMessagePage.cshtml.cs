@@ -28,7 +28,7 @@ namespace JPWeb.UI.Pages.Messages
 
         [BindProperty]
         public Message newMsg { get; set; }
-      
+        public static string user_id { get; set; }
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null)
@@ -36,8 +36,9 @@ namespace JPWeb.UI.Pages.Messages
                 return NotFound();
 
             }
-
-            msgs = await _context.Messages.OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == id).ToListAsync();
+            user_id = id;
+        
+            msgs = await _context.Messages.Include(s=>s.Sender).OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == id).ToListAsync();
          
             if (msgs == null)
             {
@@ -68,21 +69,26 @@ namespace JPWeb.UI.Pages.Messages
             client.Send(message);
 
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
-           //MessageHub = await _context.Messages
-           //     .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
+            //msgs = await _context.Messages.OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user_id).ToListAsync();
+            //MessageHub = await _context.Messages
+            //     .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
 
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
             newMsg.Sender = user;
             newMsg.TimeSent = DateTime.Now;
-            
-            _context.Messages.Add(newMsg);//is this supposed to be Update?
+            newMsg.request = _context.Requests.Where(r => r.ApplicationUserId == user_id).LastOrDefault();
+
+            _context.Messages.Add(newMsg);
+
+            user.LatestMessage = new DateTime(1987, 1, 1);
+
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Messages/viewMessage");
+            return RedirectToPage("/Messages/AdminMessagePage", new { id = user_id });
         }
     }
 }

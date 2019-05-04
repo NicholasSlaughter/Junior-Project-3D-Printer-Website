@@ -85,9 +85,11 @@ namespace JPWeb.UI.Pages.Messages
             newMsg.requestId = user.Requests.LastOrDefault().Id;
             newMsg.Sender = user;
             newMsg.TimeSent = DateTime.Now;
-            
+
+            user.LatestMessage = newMsg.TimeSent;
 
             _context.Messages.Add(newMsg);
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Messages/UserMessagePage");

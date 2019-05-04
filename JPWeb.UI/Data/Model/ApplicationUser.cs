@@ -13,7 +13,7 @@ namespace JPWeb.UI.Data.Model
         public string First_Name { get; set; }
         [Required, Display(Name = "Last Name"), MaxLength(50)]
         public string Last_Name { get; set; }
-        
+        public DateTime LatestMessage { get; set; }
         public ICollection<Request> Requests { get; set; } = new List<Request>();
         public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
