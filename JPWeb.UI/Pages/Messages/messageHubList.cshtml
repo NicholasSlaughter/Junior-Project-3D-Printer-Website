@@ -13,31 +13,31 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Messages[0].email)
+                @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Messages[0].hubTitle)
+                @Html.DisplayNameFor(model => model.ProjectName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Messages[0].latestMsg)
+                @Html.DisplayNameFor(model => model.LastMessage)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody id="table">
-        @foreach (var item in Model.Messages)
+        @foreach (var item in Model._Messages)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.email)
+                    @Html.DisplayFor(modelItem => item.Sender.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.hubTitle)
+                    @Html.DisplayFor(modelItem => item.Sender.Requests.LastOrDefault().ProjectName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.latestMsg)
+                    @Html.DisplayFor(modelItem => item.Sender.LatestMessage)
 
-                    <a asp-page="/Messages/viewMessage" asp-route-id="@item.messageHubId">Message</a>
+                    <a asp-page="/Messages/AdminMessagePage" asp-route-id="@item.Sender.Id">Message</a>
 
                 </td>
             </tr>
