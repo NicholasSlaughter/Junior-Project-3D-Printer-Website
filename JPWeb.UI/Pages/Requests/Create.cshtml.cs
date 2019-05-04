@@ -105,8 +105,11 @@ namespace JPWeb.UI.Pages.Requests
             newMsg.Sender = Requests.applicationUser;
             
              _context.Messages.Add(newMsg);
+
+            user.LatestMessage = newMsg.TimeSent;
+            _context.Users.Update(user);
+
             await _context.SaveChangesAsync();
-           
 
             return RedirectToPage("./Index");
         }
