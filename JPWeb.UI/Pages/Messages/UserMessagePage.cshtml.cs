@@ -43,7 +43,7 @@ namespace JPWeb.UI.Pages.Messages
             }
             
 
-            msgs = await _context.Messages.OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
+            msgs = await _context.Messages.Include(m=>m.Sender).OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
 
             if (msgs == null)
             {
