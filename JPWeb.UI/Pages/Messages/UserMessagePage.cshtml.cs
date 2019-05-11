@@ -65,7 +65,7 @@ namespace JPWeb.UI.Pages.Messages
             };
 
             //at the moment the users name is set as their email
-            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", User.Identity.Name, "3D Print Club", newMsg.Body.ToString())
+            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", "THEPRE.S.Q.L@gmail.com", "3D Print Club", newMsg.Body.ToString())
             {
                 BodyEncoding = Encoding.UTF8,
                 DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
