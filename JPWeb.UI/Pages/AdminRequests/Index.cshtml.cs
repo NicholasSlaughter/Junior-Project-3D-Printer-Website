@@ -25,7 +25,6 @@ namespace JPWeb.UI.Pages.AdminRequests
 
         public async Task OnGetAsync()
         {
-
             Request = await _context.Requests
                 .Include(r => r.printer)
                 .Include(c => c.Status)

@@ -118,12 +118,12 @@ namespace JPWeb.UI.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("LatestMsg");
+
                     b.Property<string>("email")
                         .HasMaxLength(50);
 
                     b.Property<string>("hubTitle");
-
-                    b.Property<DateTime>("latestMsg");
 
                     b.HasKey("messageHubId");
 
