@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 
-namespace JPWeb.UI.Pages.AdminRequests
+namespace JPWeb.UI.Pages.PendingRequests
 {
     public class DeleteModel : PageModel
     {

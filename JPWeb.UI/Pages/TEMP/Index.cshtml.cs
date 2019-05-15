@@ -7,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
-using Microsoft.AspNetCore.Authorization;
 
-namespace JPWeb.UI.Pages.AdminRequests
+namespace JPWeb.UI.Pages.TEMP
 {
-    [Authorize(Policy = "AdminAndHigherPolicy")]
     public class IndexModel : PageModel
     {
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
@@ -21,15 +19,13 @@ namespace JPWeb.UI.Pages.AdminRequests
             _context = context;
         }
 
-        public IList<Request> Request { get;set; }
+        public IList<Printer> Printer { get;set; }
 
         public async Task OnGetAsync()
         {
-            Request = await _context.Requests
-                .Include(r => r.printer)
-                .Include(c => c.Status)
-                .Where(c => c.Status.Name.Equals("Pending")) //Only shows pending requests
-                .ToListAsync();
+            Printer = await _context.Printers
+                .Include(p => p.Color)
+                .Include(p => p.Status).ToListAsync();
         }
     }
 }

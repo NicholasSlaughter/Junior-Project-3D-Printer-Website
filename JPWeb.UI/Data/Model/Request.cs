@@ -10,6 +10,7 @@ namespace JPWeb.UI.Data.Model
     {
         public int Id { get; set; }
         public string ApplicationUserId { get; set; }
+        public ApplicationUser applicationUser { get; set; }
         public int? PrinterId { get; set; }
         public Printer printer { get; set; }
         [Required]
@@ -18,7 +19,7 @@ namespace JPWeb.UI.Data.Model
         [Required]
         public string ProjectName { get; set; }
 
-        public byte[] ProjectFilePath { get; set; }
+        public string ProjectFilePath { get; set; }
         [Required]
         public DateTime DateRequested { get; set; }
         [Required]
@@ -28,5 +29,6 @@ namespace JPWeb.UI.Data.Model
         [Required]
         public bool PersonalUse { get; set; }
         public double Duration { get; set; }
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
 }

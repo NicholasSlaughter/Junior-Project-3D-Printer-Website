@@ -62,13 +62,9 @@ namespace JPWeb.UI.Pages.UserManagement
                 return Page();
             }
 
-            //_context.Attach(ApplicationUser).State = EntityState.Modified;
-
             try
             {
                 await PersistUserClaims();
-
-                //await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {

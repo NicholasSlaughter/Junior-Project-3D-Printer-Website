@@ -10,6 +10,7 @@ using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using JPWeb.UI.Utilities;
 
 namespace JPWeb.UI.Pages.Messages
 {
@@ -23,17 +24,27 @@ namespace JPWeb.UI.Pages.Messages
         {
             _context = context;
             _userManager = userManager;
-           
-        }
 
-        public IList<MessageHub> Messages { get; set; }
+        }
+        public string Email = " ";
+        public string ProjectName = " ";
+        public string LastMessage = "Last Message";
+        public IList<Request> _Requests = new List<Request>();
+        public IList<Message> _Messages = new List<Message>();
         public async Task OnGetAsync()
         {
-            var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
-
-            Messages = await _context.Messages
-                .OrderByDescending(i => i.latestMsg)
-                .ToListAsync();
+            _Messages = await _context.Messages.Include(u => u.Sender).Include(u => u.request).OrderByDescending(r => r.Sender.LatestMessage).GroupBy(s => s.Sender.Id).Select(g => g.First()).OrderByDescending(r => r.Sender.LatestMessage).ToListAsync();
+            int length = _Messages.Count;
+            for (int i = 0; i < length; i++)
+            {
+                if (_Messages[i].Sender.LatestMessage == new DateTime(1987, 1, 1))
+                {
+                   _Messages.Remove(_Messages[i]);
+                    length--;
+                    i--;
+                }
+            }
+            
         }
     }
 }

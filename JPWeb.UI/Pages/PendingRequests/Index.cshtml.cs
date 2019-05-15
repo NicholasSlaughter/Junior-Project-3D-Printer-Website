@@ -8,9 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Authorization;
-using System.IO;
 
-namespace JPWeb.UI.Pages.ApprovedRequests
+namespace JPWeb.UI.Pages.PendingRequests
 {
     [Authorize(Policy = "AdminAndHigherPolicy")]
     public class IndexModel : PageModel
@@ -29,27 +28,8 @@ namespace JPWeb.UI.Pages.ApprovedRequests
             Request = await _context.Requests
                 .Include(r => r.printer)
                 .Include(c => c.Status)
-                .Where(c => c.Status.Name.Equals("Approved")) //Only shows approved requests
+                .Where(c => c.Status.Name.Equals("Pending")) //Only shows pending requests
                 .ToListAsync();
-        }
-
-
-        [HttpPost, ActionName("Download")]
-        public ActionResult OnPostDownload(int id)
-        {
-            var Request = _context.GetRequestById(id);
-            var file = Request.Result.ProjectFilePath;
-
-            var mimeType = "text/plain";
-
-            var memoryStream = new MemoryStream();
-
-            var streamWriter = new StreamWriter(memoryStream);
-
-            streamWriter.WriteLine(file);
-            streamWriter.Flush();
-
-            return File(memoryStream.GetBuffer(), mimeType, "File.txt");
         }
     }
 }

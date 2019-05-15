@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data.Model;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace JPWeb.UI.Data
 {
@@ -17,6 +19,15 @@ namespace JPWeb.UI.Data
         public DbSet<Printer> Printers { get; set; }
         public DbSet<Status> Statuses { get; set; }
 
-        public DbSet<JPWeb.UI.Data.Model.MessageHub> Messages { get; set; }
+        public DbSet<JPWeb.UI.Data.Model.Message> Messages { get; set; }
+
+        public async virtual Task<Request> GetRequestById(int? id)
+        {
+            if (id == null) return null;
+
+            var request = await Requests.FindAsync(id);
+
+            return request;
+        }
     }
 }

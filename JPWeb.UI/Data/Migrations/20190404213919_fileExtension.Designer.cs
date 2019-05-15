@@ -4,18 +4,20 @@ using JPWeb.UI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace JPWeb.UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190404213919_fileExtension")]
+    partial class fileExtension
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -41,8 +43,6 @@ namespace JPWeb.UI.Data.Migrations
                     b.Property<string>("Last_Name")
                         .IsRequired()
                         .HasMaxLength(50);
-
-                    b.Property<DateTime>("LatestMessage");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -95,25 +95,39 @@ namespace JPWeb.UI.Data.Migrations
 
             modelBuilder.Entity("JPWeb.UI.Data.Model.Message", b =>
                 {
-                    b.Property<int>("MessageId")
+                    b.Property<int>("messageId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Body");
+                    b.Property<string>("body");
 
-                    b.Property<int>("SenderId");
+                    b.Property<int>("messageHubId");
 
-                    b.Property<string>("SenderId1");
+                    b.Property<string>("sender");
 
-                    b.Property<DateTime>("TimeSent");
+                    b.Property<DateTime>("timeSent");
 
-                    b.Property<int>("requestId");
+                    b.HasKey("messageId");
 
-                    b.HasKey("MessageId");
+                    b.HasIndex("messageHubId");
 
-                    b.HasIndex("SenderId1");
+                    b.ToTable("Message");
+                });
 
-                    b.HasIndex("requestId");
+            modelBuilder.Entity("JPWeb.UI.Data.Model.MessageHub", b =>
+                {
+                    b.Property<int>("messageHubId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("email")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("hubTitle");
+
+                    b.Property<DateTime>("latestMsg");
+
+                    b.HasKey("messageHubId");
 
                     b.ToTable("Messages");
                 });
@@ -308,13 +322,9 @@ namespace JPWeb.UI.Data.Migrations
 
             modelBuilder.Entity("JPWeb.UI.Data.Model.Message", b =>
                 {
-                    b.HasOne("JPWeb.UI.Data.Model.ApplicationUser", "Sender")
+                    b.HasOne("JPWeb.UI.Data.Model.MessageHub", "messageHub")
                         .WithMany("Messages")
-                        .HasForeignKey("SenderId1");
-
-                    b.HasOne("JPWeb.UI.Data.Model.Request", "request")
-                        .WithMany("Messages")
-                        .HasForeignKey("requestId")
+                        .HasForeignKey("messageHubId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -333,7 +343,7 @@ namespace JPWeb.UI.Data.Migrations
 
             modelBuilder.Entity("JPWeb.UI.Data.Model.Request", b =>
                 {
-                    b.HasOne("JPWeb.UI.Data.Model.ApplicationUser", "applicationUser")
+                    b.HasOne("JPWeb.UI.Data.Model.ApplicationUser")
                         .WithMany("Requests")
                         .HasForeignKey("ApplicationUserId");
 

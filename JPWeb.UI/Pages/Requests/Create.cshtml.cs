@@ -10,11 +10,40 @@ using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Net;
+using System.IO;
 
 namespace JPWeb.UI.Pages.Requests
 {
+
     public class CreateModel : PageModel
     {
+        public static string ProcessFormFile(IFormFile formFile)
+        {
+            //var fileName = WebUtility.HtmlEncode(Path.GetFileName(formFile.FileName));
+            byte[] fileString;
+
+            using (var streamReader = new StreamReader(formFile.OpenReadStream()))
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    streamReader.BaseStream.CopyTo(memoryStream);
+                    fileString = memoryStream.ToArray();
+                }
+            }
+
+            var contents = System.Text.Encoding.UTF8.GetString(fileString);
+
+            return contents;
+        }
+
+        [BindProperty, Required, DisplayName("Project File Path"), FileExtensions(fileExtensions: "txt", ErrorMessage = "The file must be a txt.")]
+        public IFormFile ProjectFile { get; set; }
+
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -32,7 +61,7 @@ namespace JPWeb.UI.Pages.Requests
         [BindProperty]
         public Request Requests { get; set; }
 
-        public MessageHub userHub { get; set; }
+        public Message newMsg = new Message();
 
         //public async Task<IActionResult> OnGetAsync(int? id)
         //{
@@ -65,38 +94,47 @@ namespace JPWeb.UI.Pages.Requests
             Requests.StatusId = _context.Statuses.SingleOrDefault(c => c.Name.Equals("Pending")).Id;
             Requests.DateMade = DateTime.Now;
             Requests.Duration = 120;
+            Requests.ProjectFilePath = ProcessFormFile(ProjectFile);
 
             _context.Requests.Add(Requests);          
+            //await _context.SaveChangesAsync();
+            
+            newMsg.Body = "A NEW PROJECT HAS BEEN SUBMITTED";
+            newMsg.TimeSent = DateTime.Now;
+            newMsg.request = Requests;
+            newMsg.Sender = Requests.applicationUser;
+            
+             _context.Messages.Add(newMsg);
+
+            user.LatestMessage = newMsg.TimeSent;
+            _context.Users.Update(user);
+
             await _context.SaveChangesAsync();
 
-            string userEmail = User.Identity.Name;
-            // int derp = _context.Database.ExecuteSqlCommand("SELECT COUNT(*) FROM MESSAGES WHERE ([email] = @userEmail)", new SqlParameter("@userEmail",userEmail));
-            int derp = _context.Database.ExecuteSqlCommand("UPDATE MESSAGES SET LatestMsg = GETDATE() WHERE ([email] = @userEmail)", new SqlParameter("@userEmail", userEmail));
-            if (derp == 0)
-            {
-                //create new hub for user
-                userHub = new MessageHub();
-
-                userHub.email = userEmail;
-                userHub.latestMsg = DateTime.Now;
-                userHub.hubTitle = Requests.ProjectName;
-                userHub.Messages.Add(new Message { body = "A NEW PROJECT HAS BEEN SUBMITTED" , timeSent = DateTime.Now });
-                _context.Messages.Add(userHub);
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                //add message in the user's hub
-                userHub = await _context.Messages
-               .Include(l => l.Messages).FirstOrDefaultAsync(m => m.email == userEmail);
-                userHub.Messages.Add(new Message { body = "A NEW PROJECT HAS BEEN SUBMITTED", timeSent = DateTime.Now });
-                userHub.latestMsg = DateTime.Now;
-                userHub.hubTitle = Requests.ProjectName;
-                _context.Messages.Update(userHub);
-                await _context.SaveChangesAsync();
-            }
-
             return RedirectToPage("./Index");
+        }
+
+        [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+        public class FileExtensionsAttribute : ValidationAttribute
+        {
+            private List<string> AllowedExtensions { get; set; }
+
+            public FileExtensionsAttribute(string fileExtensions)
+            {
+                AllowedExtensions = fileExtensions.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            }
+
+            public override bool IsValid(object value)
+            {
+                if (value is IFormFile file)
+                {
+                    var fileName = file.FileName;
+
+                    return AllowedExtensions.Any(y => fileName.EndsWith(y));
+                }
+
+                return true;
+            }
         }
     }
 }

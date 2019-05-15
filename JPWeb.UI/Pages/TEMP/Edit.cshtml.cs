@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using JPWeb.UI.Data;
 using JPWeb.UI.Data.Model;
 
-namespace JPWeb.UI.Pages.AdminRequests
+namespace JPWeb.UI.Pages.TEMP
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace JPWeb.UI.Pages.AdminRequests
         }
 
         [BindProperty]
-        public Request Request { get; set; }
+        public Printer Printer { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,27 +30,27 @@ namespace JPWeb.UI.Pages.AdminRequests
                 return NotFound();
             }
 
-            Request = await _context.Requests
-                .Include(c => c.Status)
-                .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id == id);
+            Printer = await _context.Printers
+                .Include(p => p.Color)
+                .Include(p => p.Status).FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Request == null)
+            if (Printer == null)
             {
                 return NotFound();
             }
-           ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Id");
-           ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "name");
+           ViewData["ColorId"] = new SelectList(_context.Set<Color>(), "Id", "Id");
+           ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Id");
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-            _context.Attach(Request).State = EntityState.Modified;
+            _context.Attach(Printer).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace JPWeb.UI.Pages.AdminRequests
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RequestExists(Request.Id))
+                if (!PrinterExists(Printer.Id))
                 {
                     return NotFound();
                 }
@@ -71,9 +71,9 @@ namespace JPWeb.UI.Pages.AdminRequests
             return RedirectToPage("./Index");
         }
 
-        private bool RequestExists(int id)
+        private bool PrinterExists(int id)
         {
-            return _context.Requests.Any(e => e.Id == id);
+            return _context.Printers.Any(e => e.Id == id);
         }
     }
 }
