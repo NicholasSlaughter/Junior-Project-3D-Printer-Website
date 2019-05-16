@@ -50,6 +50,9 @@ namespace JPWeb.UI
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             //services.AddMvc();
+
+
+            services.AddMvc();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("UserAndHigherPolicy", p =>
