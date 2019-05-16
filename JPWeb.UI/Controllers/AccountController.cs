@@ -35,7 +35,7 @@ namespace JPWeb.UI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Last_Name = model.LastName, First_Name = model.FirstName };
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
