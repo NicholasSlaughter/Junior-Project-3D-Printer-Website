@@ -10,7 +10,7 @@ namespace JPWeb.UI.Data.Model
     {
         public int Id { get; set; }
         public string ApplicationUserId { get; set; }
-        public ApplicationUser applicationUser { get; set; }
+        public AccountController applicationUser { get; set; }
         public int? PrinterId { get; set; }
         public Printer printer { get; set; }
         [Required]

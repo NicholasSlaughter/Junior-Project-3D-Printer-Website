@@ -18,9 +18,9 @@ namespace JPWeb.UI.Pages.Messages
     public class messageHubListModel : PageModel
     {
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<AccountController> _userManager;
 
-        public messageHubListModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public messageHubListModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<AccountController> userManager)
         {
             _context = context;
             _userManager = userManager;

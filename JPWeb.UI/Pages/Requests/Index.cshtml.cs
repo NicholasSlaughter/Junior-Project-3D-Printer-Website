@@ -16,9 +16,9 @@ namespace JPWeb.UI.Pages.Requests
     public class IndexModel : PageModel
     {
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<AccountController> _userManager;
 
-        public IndexModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public IndexModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<AccountController> userManager)
         {
             _context = context;
             _userManager = userManager;

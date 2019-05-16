@@ -17,9 +17,9 @@ namespace JPWeb.UI.Pages.UserManagement
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<AccountController> _userManager;
 
-        public EditModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public EditModel(ApplicationDbContext context, UserManager<AccountController> userManager)
         {
             _context = context;
             _userManager = userManager;
