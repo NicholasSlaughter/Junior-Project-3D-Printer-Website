@@ -8,11 +8,11 @@ namespace JPWeb.UI.Data.Model
 {    
     public class Message
     {
-        public int MessageId { get; set; }
+        public string MessageId { get; set; }
         public ApplicationUser Sender { get; set; }
-        public int SenderId { get; set; }
+        public string SenderId { get; set; }
         public Request request { get; set; }
-        public int requestId { get; set; }
+        public string requestId { get; set; }
         public string Body { get; set; }
         public DateTime TimeSent { get; set; }
     }

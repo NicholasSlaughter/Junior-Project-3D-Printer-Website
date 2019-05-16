@@ -34,7 +34,7 @@ namespace JPWeb.UI.Pages.Messages
         public async Task OnGetAsync()
         {
             
-            _Messages = await _context.Messages.Include(u => u.Sender).Include(u => u.request).OrderByDescending(r => r.Sender.LatestMessage).GroupBy(s => s.Sender.Id).Select(g => g.First()).OrderByDescending(r => r.Sender.LatestMessage).ToListAsync();
+            _Messages = await _context.Message.Include(u => u.Sender).Include(u => u.request).OrderByDescending(r => r.Sender.LatestMessage).GroupBy(s => s.Sender.Id).Select(g => g.First()).OrderByDescending(r => r.Sender.LatestMessage).ToListAsync();
             int length = _Messages.Count;
             for (int i = 0; i < length; i++)
             {

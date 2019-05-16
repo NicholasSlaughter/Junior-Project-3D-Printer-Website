@@ -22,7 +22,7 @@ namespace JPWeb.UI.Pages.TEMP
         public IActionResult OnGet()
         {
         ViewData["ColorId"] = new SelectList(_context.Set<Color>(), "Id", "Id");
-        ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Id");
+        ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Id");
             return Page();
         }
 
@@ -36,7 +36,7 @@ namespace JPWeb.UI.Pages.TEMP
                 return Page();
             }
 
-            _context.Printers.Add(Printer);
+            _context.Printer.Add(Printer);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

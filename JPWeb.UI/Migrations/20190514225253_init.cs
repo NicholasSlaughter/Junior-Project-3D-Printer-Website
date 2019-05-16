@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace JPWeb.UI.Data.Migrations
+namespace JPWeb.UI.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,11 +40,38 @@ namespace JPWeb.UI.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    First_Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Last_Name = table.Column<string>(maxLength: 50, nullable: false),
+                    LatestMessage = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PrintColor",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrintColor", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Status",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Status", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,6 +180,98 @@ namespace JPWeb.UI.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Printer",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    StatusId = table.Column<string>(nullable: false),
+                    ColorId = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Printer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Printer_PrintColor_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "PrintColor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Printer_Status_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Request",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    PrinterId = table.Column<string>(nullable: true),
+                    StatusId = table.Column<string>(nullable: false),
+                    ProjectName = table.Column<string>(nullable: false),
+                    ProjectFilePath = table.Column<string>(nullable: true),
+                    DateRequested = table.Column<DateTime>(nullable: false),
+                    DateMade = table.Column<DateTime>(nullable: false),
+                    ProjectDescript = table.Column<string>(nullable: false),
+                    PersonalUse = table.Column<bool>(nullable: false),
+                    Duration = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Request", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Request_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Request_Printer_PrinterId",
+                        column: x => x.PrinterId,
+                        principalTable: "Printer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Request_Status_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "Status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Message",
+                columns: table => new
+                {
+                    MessageId = table.Column<string>(nullable: false),
+                    SenderId = table.Column<string>(nullable: true),
+                    requestId = table.Column<string>(nullable: true),
+                    Body = table.Column<string>(nullable: true),
+                    TimeSent = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Message", x => x.MessageId);
+                    table.ForeignKey(
+                        name: "FK_Message_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Message_Request_requestId",
+                        column: x => x.requestId,
+                        principalTable: "Request",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +310,41 @@ namespace JPWeb.UI.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Message_SenderId",
+                table: "Message",
+                column: "SenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Message_requestId",
+                table: "Message",
+                column: "requestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Printer_ColorId",
+                table: "Printer",
+                column: "ColorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Printer_StatusId",
+                table: "Printer",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Request_ApplicationUserId",
+                table: "Request",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Request_PrinterId",
+                table: "Request",
+                column: "PrinterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Request_StatusId",
+                table: "Request",
+                column: "StatusId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,10 +365,25 @@ namespace JPWeb.UI.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Message");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Request");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Printer");
+
+            migrationBuilder.DropTable(
+                name: "PrintColor");
+
+            migrationBuilder.DropTable(
+                name: "Status");
         }
     }
 }

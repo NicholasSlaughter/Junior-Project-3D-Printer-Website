@@ -9,7 +9,7 @@ namespace JPWeb.UI.Data.Model
     //Id 5-7 = Printer Status
     public class Status
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
     }
 }

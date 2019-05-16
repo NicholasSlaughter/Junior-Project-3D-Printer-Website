@@ -23,14 +23,14 @@ namespace JPWeb.UI.Pages.Requests
         [BindProperty]
         public Request Requests { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            if (id.Equals(null))
             {
                 return NotFound();
             }
 
-            Requests = await _context.Requests.FirstOrDefaultAsync(m => m.Id == id);
+            Requests = await _context.Request.FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Requests == null)
             {
@@ -67,9 +67,9 @@ namespace JPWeb.UI.Pages.Requests
             return RedirectToPage("./Index");
         }
 
-        private bool RequestsExists(int id)
+        private bool RequestsExists(string id)
         {
-            return _context.Requests.Any(e => e.Id == id);
+            return _context.Request.Any(e => e.Id.Equals(id));
         }
     }
 }

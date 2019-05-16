@@ -21,16 +21,16 @@ namespace JPWeb.UI.Pages.TEMP
 
         public Printer Printer { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            if (id.Equals(null))
             {
                 return NotFound();
             }
 
-            Printer = await _context.Printers
+            Printer = await _context.Printer
                 .Include(p => p.Color)
-                .Include(p => p.Status).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(p => p.Status).FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Printer == null)
             {

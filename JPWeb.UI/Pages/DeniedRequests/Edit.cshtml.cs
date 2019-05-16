@@ -23,23 +23,23 @@ namespace JPWeb.UI.Pages.DeniedRequests
         [BindProperty]
         public Request Request { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            if (id.Equals(null))
             {
                 return NotFound();
             }
 
-            Request = await _context.Requests
+            Request = await _context.Request
                 .Include(c => c.Status)
-                .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Request == null)
             {
                 return NotFound();
             }
-           ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Id");
-           ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "name");
+           ViewData["PrinterId"] = new SelectList(_context.Printer, "Id", "Id");
+           ViewData["StatusId"] = new SelectList(_context.Status, "Id", "name");
             return Page();
         }
 
@@ -71,9 +71,9 @@ namespace JPWeb.UI.Pages.DeniedRequests
             return RedirectToPage("./Index");
         }
 
-        private bool RequestExists(int id)
+        private bool RequestExists(string id)
         {
-            return _context.Requests.Any(e => e.Id == id);
+            return _context.Request.Any(e => e.Id.Equals(id));
         }
     }
 }

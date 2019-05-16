@@ -8,19 +8,19 @@ namespace JPWeb.UI.Data.Model
 {
     public class Request
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string ApplicationUserId { get; set; }
         public ApplicationUser applicationUser { get; set; }
-        public int? PrinterId { get; set; }
+        public string PrinterId { get; set; }
         public Printer printer { get; set; }
         [Required]
-        public int StatusId { get; set; }
+        public string StatusId { get; set; }
         public Status Status { get; set; }
         [Required]
         public string ProjectName { get; set; }
 
         public string ProjectFilePath { get; set; }
-        [Required]
+        [Required, DisplayFormat(DataFormatString = "{0:MM/dd/yy hh:mm tt}"), Display(Name = "Date Requested")]
         public DateTime DateRequested { get; set; }
         [Required]
         public DateTime DateMade { get; set; }

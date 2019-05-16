@@ -21,14 +21,14 @@ namespace JPWeb.UI.Pages.Printers
 
         public Printer Printer { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            if (id.Equals(null))
             {
                 return NotFound();
             }
 
-            Printer = await _context.Printers.FirstOrDefaultAsync(m => m.Id == id);
+            Printer = await _context.Printer.FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Printer == null)
             {

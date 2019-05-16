@@ -22,14 +22,14 @@ namespace JPWeb.UI.Pages.Requests
         [BindProperty]
         public Request Requests { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            if (id.Equals(null))
             {
                 return NotFound();
             }
 
-            Requests = await _context.Requests.FirstOrDefaultAsync(m => m.Id == id);
+            Requests = await _context.Request.FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Requests == null)
             {
@@ -38,18 +38,18 @@ namespace JPWeb.UI.Pages.Requests
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(string id)
         {
-            if (id == null)
+            if (id.Equals(null))
             {
                 return NotFound();
             }
 
-            Requests = await _context.Requests.FindAsync(id);
+            Requests = await _context.Request.FindAsync(id);
 
             if (Requests != null)
             {
-                _context.Requests.Remove(Requests);
+                _context.Request.Remove(Requests);
                 await _context.SaveChangesAsync();
             }
 

@@ -23,14 +23,14 @@ namespace JPWeb.UI.Pages.Printers
         [BindProperty]
         public Printer Printer { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            if (id.Equals(null))
             {
                 return NotFound();
             }
 
-            Printer = await _context.Printers.FirstOrDefaultAsync(m => m.Id == id);
+            Printer = await _context.Printer.FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Printer == null)
             {
@@ -67,9 +67,9 @@ namespace JPWeb.UI.Pages.Printers
             return RedirectToPage("./Index");
         }
 
-        private bool PrinterExists(int id)
+        private bool PrinterExists(string id)
         {
-            return _context.Printers.Any(e => e.Id == id);
+            return _context.Printer.Any(e => e.Id.Equals(id));
         }
     }
 }

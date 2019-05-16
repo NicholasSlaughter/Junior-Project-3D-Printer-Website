@@ -23,7 +23,7 @@ namespace JPWeb.UI.Pages.TEMP
 
         public async Task OnGetAsync()
         {
-            Printer = await _context.Printers
+            Printer = await _context.Printer
                 .Include(p => p.Color)
                 .Include(p => p.Status).ToListAsync();
         }

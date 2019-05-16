@@ -38,7 +38,7 @@ namespace JPWeb.UI.Pages.Messages
             }
             user_id = id;
         
-            msgs = await _context.Messages.Include(s=>s.Sender).OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == id).ToListAsync();
+            msgs = await _context.Message.Include(s=>s.Sender).OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == id).ToListAsync();
          
             if (msgs == null)
             {
@@ -80,9 +80,9 @@ namespace JPWeb.UI.Pages.Messages
 
             newMsg.Sender = user;
             newMsg.TimeSent = DateTime.Now;
-            newMsg.request = _context.Requests.Where(r => r.ApplicationUserId == user_id).LastOrDefault();
+            newMsg.request = _context.Request.Where(r => r.ApplicationUserId == user_id).LastOrDefault();
 
-            _context.Messages.Add(newMsg);
+            _context.Message.Add(newMsg);
 
             user.LatestMessage = new DateTime(1987, 1, 1);
 

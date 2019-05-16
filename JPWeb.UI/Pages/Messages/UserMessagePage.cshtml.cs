@@ -43,7 +43,7 @@ namespace JPWeb.UI.Pages.Messages
             }
             
 
-            msgs = await _context.Messages.OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
+            msgs = await _context.Message.OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
 
             if (msgs == null)
             {
@@ -81,14 +81,14 @@ namespace JPWeb.UI.Pages.Messages
                 return Page();
             }
 
-            newMsg.request = _context.Requests.Where(r => r.applicationUser.Email == user.Email).LastOrDefault();
+            newMsg.request = _context.Request.Where(r => r.applicationUser.Email == user.Email).LastOrDefault();
             newMsg.requestId = user.Requests.LastOrDefault().Id;
             newMsg.Sender = user;
             newMsg.TimeSent = DateTime.Now;
 
             user.LatestMessage = newMsg.TimeSent;
 
-            _context.Messages.Add(newMsg);
+            _context.Message.Add(newMsg);
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
 

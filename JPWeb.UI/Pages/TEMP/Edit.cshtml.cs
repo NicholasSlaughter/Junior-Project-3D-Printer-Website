@@ -23,23 +23,23 @@ namespace JPWeb.UI.Pages.TEMP
         [BindProperty]
         public Printer Printer { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            if (id.Equals(null))
             {
                 return NotFound();
             }
 
-            Printer = await _context.Printers
+            Printer = await _context.Printer
                 .Include(p => p.Color)
-                .Include(p => p.Status).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(p => p.Status).FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Printer == null)
             {
                 return NotFound();
             }
            ViewData["ColorId"] = new SelectList(_context.Set<Color>(), "Id", "Id");
-           ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Id");
+           ViewData["StatusId"] = new SelectList(_context.Status, "Id", "Id");
             return Page();
         }
 
@@ -71,9 +71,9 @@ namespace JPWeb.UI.Pages.TEMP
             return RedirectToPage("./Index");
         }
 
-        private bool PrinterExists(int id)
+        private bool PrinterExists(string id)
         {
-            return _context.Printers.Any(e => e.Id == id);
+            return _context.Printer.Any(e => e.Id.Equals(id));
         }
     }
 }

@@ -13,6 +13,7 @@
     <div class="col-md-4">
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Requests.StatusId" />
             <div class="form-group">
                 <label asp-for="Requests.ProjectName" class="control-label"></label>
                 <input asp-for="Requests.ProjectName" class="form-control" />

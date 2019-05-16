@@ -30,7 +30,7 @@ namespace JPWeb.UI.Pages.Requests
         {
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
 
-            Requests = await _context.Requests
+            Requests = await _context.Request
                 .OrderByDescending(c => c.Id)
                 .Include(c => c.Status)
                 .Where(c => c.ApplicationUserId.Equals(user.Id))
