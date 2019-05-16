@@ -19,9 +19,9 @@ namespace JPWeb.UI.Pages.Messages
     {
 
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
-        private readonly UserManager<AccountController> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserMessagePage(JPWeb.UI.Data.ApplicationDbContext context, UserManager<AccountController> userManager)
+        public UserMessagePage(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _context = context;

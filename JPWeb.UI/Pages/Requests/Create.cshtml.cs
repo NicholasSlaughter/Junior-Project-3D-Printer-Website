@@ -45,9 +45,9 @@ namespace JPWeb.UI.Pages.Requests
         public IFormFile ProjectFile { get; set; }
 
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
-        private readonly UserManager<AccountController> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CreateModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<AccountController> userManager)
+        public CreateModel(JPWeb.UI.Data.ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _context = context;

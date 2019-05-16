@@ -17,14 +17,14 @@ namespace JPWeb.UI.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<AccountController> _signInManager;
-        private readonly UserManager<AccountController> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<AccountController> userManager,
-            SignInManager<AccountController> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -76,7 +76,7 @@ namespace JPWeb.UI.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new AccountController { UserName = Input.Email, Email = Input.Email, First_Name = Input.FirstName, Last_Name = Input.LastName  };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, First_Name = Input.FirstName, Last_Name = Input.LastName  };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

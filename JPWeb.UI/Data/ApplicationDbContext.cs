@@ -9,7 +9,7 @@ using System.IO;
 
 namespace JPWeb.UI.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<AccountController>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

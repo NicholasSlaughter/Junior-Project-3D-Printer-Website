@@ -13,13 +13,13 @@ namespace JPWeb.UI.Pages.UserManagement
     [Authorize(Policy = "SuperAdminPolicy")]
     public class Index : PageModel
     {
-        private readonly UserManager<AccountController> _userManager;
-        private readonly SignInManager<AccountController> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public IList<AccountController> Users { get; set; }
+        public IList<ApplicationUser> Users { get; set; }
         public string EditMessage { get; set; }
         //See where injection is coming from
-        public Index(UserManager<AccountController> userManager, SignInManager<AccountController> signInManager)
+        public Index(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
