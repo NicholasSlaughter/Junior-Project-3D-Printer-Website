@@ -1,0 +1,68 @@
+﻿@page
+@model JPWeb.UI.Pages.Schedule.SchedulePageModel
+@{
+    ViewData["Title"] = "Schedule";
+}
+
+<h2>Schedule For Date:</h2>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <input asp-for="TimeRequested" class="form-control" />
+        <span asp-validation-for="TimeRequested" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Check" class="btn btn-default" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Printers)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var _printer in Model.Printer)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => _printer.Name)
+                </td>
+            </tr>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Requests[0].ProjectName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Requests[0].Duration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Requests[0].DateRequested)
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            @foreach (var _request in Model.Requests)
+            {
+
+                <td>
+                    @Html.DisplayFor(modelItem => _request.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => _request.Duration)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => _request.DateRequested)
+                </td>
+            }
+        </tr>
+
+    }
+        </tbody>
+    </table>

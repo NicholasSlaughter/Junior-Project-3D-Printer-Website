@@ -33,8 +33,7 @@
                 <partial name="_LoginPartial" />
                 <ul class="nav navbar-nav">
                     <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-page="/About">About</a></li>
-                    <li><a asp-page="/Contact">Contact</a></li>
+                    <li><a asp-page="/Schedule/SchedulePage">Schedule</a></li>
 
                     @{ System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
                         if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
@@ -50,8 +49,8 @@
                             <li><a asp-page="/DeniedRequests/Index">Denied Requests</a></li>
                         } }
 
-                    <li><a asp-page="/Requests/Index">Make A Request</a></li>
-
+                    <li><a asp-page="/Requests/Create">Make A Request</a></li>
+                    <li><a asp-page="/Requests/Index">View Requests</a></li>
                     @{
                         if (AuthorizeHtmlHelper.UserIsSuperAdmin(user))
                         {
@@ -68,6 +67,8 @@
                         }
                     }
 
+                    <li><a asp-page="/Contact">Contact</a></li>
+                    <li><a asp-page="/About">About</a></li>
                 </ul>
 
             </div>
