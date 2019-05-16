@@ -30,13 +30,14 @@ namespace JPWeb.UI.Pages.Schedule
             {
                 TimeRequested = DateTime.Now;
                 Printer = await _context.Printer.ToListAsync();
-                Requests = await _context.Request.Where(r => r.DateRequested.DayOfYear.Equals(timeRequested.DayOfYear)).ToListAsync();
+                Requests = await _context.Request.Where(r => r.DateRequested.DayOfYear.Equals(timeRequested.DayOfYear)).Where(c => c.Status.Name.Equals("Approved")).ToListAsync();
             }
             else
             {
+                TimeRequested = DateTime.Now;
                 TimeRequested = timeRequested;
                 Printer = await _context.Printer.ToListAsync();
-                Requests = await _context.Request.Where(r => r.DateRequested.DayOfYear.Equals(timeRequested.DayOfYear)).ToListAsync();
+                Requests = await _context.Request.Where(r => r.DateRequested.DayOfYear.Equals(timeRequested.DayOfYear)).Where(c => c.Status.Name.Equals("Approved")).ToListAsync();
             }
 
         }

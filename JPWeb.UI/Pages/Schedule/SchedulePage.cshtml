@@ -49,20 +49,23 @@
         <tr>
             @foreach (var _request in Model.Requests)
             {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => _request.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => _request.Duration)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => _request.ProjectName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => _request.Duration)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => _request.DateRequested)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => _request.DateRequested)
-                </td>
-            }
+            
         </tr>
+            }
+            </tr>
 
-    }
+        }
         </tbody>
     </table>
