@@ -49,7 +49,12 @@ namespace JPWeb.UI
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //services.AddMvc();
+
+            services.AddMvc();
+
+            services.AddTransient<UserManager<ApplicationUser>>();
+            services.AddTransient<ApplicationDbContext>();
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("UserAndHigherPolicy", p =>
@@ -92,7 +97,7 @@ namespace JPWeb.UI
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            app.UseIdentity();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

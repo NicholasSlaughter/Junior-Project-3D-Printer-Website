@@ -19,7 +19,7 @@ namespace JPWeb.UI.Pages.Schedule
         }
 
         public IList<Printer> Printer { get; set; }
-        public string Printers = "";
+        public string _________________;
         public IList<Request> Requests { get; set; }
 
         [BindProperty]
