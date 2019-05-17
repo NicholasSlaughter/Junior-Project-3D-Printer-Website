@@ -8,7 +8,7 @@ namespace JPWeb.UI.Data.Model
 {    
     public class Message
     {
-        public string MessageId { get; set; }
+        public string ID { get; set; }
         public ApplicationUser Sender { get; set; }
         public string SenderId { get; set; }
         public Request request { get; set; }
