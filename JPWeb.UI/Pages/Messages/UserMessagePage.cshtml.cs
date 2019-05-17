@@ -12,9 +12,11 @@ using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JPWeb.UI.Pages.Messages
 {
+    [Authorize]
     public class UserMessagePage : PageModel
     {
 

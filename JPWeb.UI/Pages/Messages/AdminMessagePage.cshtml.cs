@@ -10,9 +10,11 @@ using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JPWeb.UI.Pages.Messages
 {
+    [Authorize]
     public class AdminMessagePage : PageModel
     {
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;

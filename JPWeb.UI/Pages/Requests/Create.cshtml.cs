@@ -16,10 +16,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Net;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JPWeb.UI.Pages.Requests
 {
-
+    [Authorize]
     public class CreateModel : PageModel
     {
         public static string ProcessFormFile(IFormFile formFile)
