@@ -1,23 +1,17 @@
 ﻿using JPWeb.UI.Data.Model;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;
-
-
 
 namespace JPWeb.UI.Controllers
 {
     [System.Web.Http.Authorize]
-    [RoutePrefix("api/Account")]
+    [Microsoft.AspNetCore.Mvc.Route("api/Account")]
+
     public class AccountController : ApiController
     {
-
+        
         private readonly UserManager<ApplicationUser> _userManager;
 
         public AccountController(UserManager<ApplicationUser> userManager)
@@ -27,11 +21,12 @@ namespace JPWeb.UI.Controllers
 
         // POST api/Account/Register
         [System.Web.Http.AllowAnonymous]
-        [System.Web.Http.Route("Register")]
+        [Microsoft.AspNetCore.Mvc.Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
             {
+                
                 return BadRequest(ModelState);
             }
 
@@ -57,7 +52,7 @@ namespace JPWeb.UI.Controllers
             {
                 if (result.Errors != null)
                 {
-                    foreach(var error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error.ToString());
                     }
