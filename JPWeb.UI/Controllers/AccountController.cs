@@ -24,9 +24,8 @@ namespace JPWeb.UI.Controllers
         [Microsoft.AspNetCore.Mvc.Route("Register")]
         public async Task<IHttpActionResult> Register([Microsoft.AspNetCore.Mvc.FromBody]  RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                
+            if (!ModelState.IsValid) 
+            {                
                 return BadRequest(ModelState);
             }
 
