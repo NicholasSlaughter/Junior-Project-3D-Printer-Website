@@ -1,25 +1,10 @@
 ﻿@page
-@using JPWeb.UI.Utilities
-
 @model JPWeb.UI.Pages.Schedule.SchedulePageModel
 @{
     ViewData["Title"] = "Schedule";
 }
 
-@{System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
-    if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
-    {
-        <br />
-        <br />
-        <br />
-        <h2>Schedule For Date:</h2>
-    }
-    else
-    {
-        <h2>Schedule For Date:</h2>
-    }
-}
-
+<h2>Schedule For Date:</h2>
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
@@ -33,21 +18,21 @@
 </form>
 
 <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Printers)
+            </th>
+        </tr>
+    </thead>
     <tbody>
         @foreach (var _printer in Model.Printer)
         {
-        <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Printer)
-                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => _printer.Name)
+                </td>
             </tr>
-        </thead>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => _printer.Name)
-            </td>
-        </tr>
         <thead>
             <tr>
                 <th>
@@ -62,23 +47,23 @@
             </tr>
         </thead>
         <tr>
-            @foreach (var _request in Model.Requests.Where(r => r.printer == _printer))
+            @foreach (var _request in Model.Requests)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => _request.ProjectName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => _request.Duration)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => _request.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => _request.Duration)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => _request.DateRequested)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => _request.DateRequested)
+            </td>
 
-
-            </tr>
-        }
+            
+        </tr>
+            }
             </tr>
 
         }
