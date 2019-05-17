@@ -39,8 +39,9 @@ namespace JPWeb.UI.Pages.Messages
 
             }
             user_id = id;
-        
-            msgs = await _context.Message.Include(s=>s.Sender).OrderByDescending(i => i.ID).Where(m => m.request.ApplicationUserId == id).ToListAsync();
+
+           // msgs = await _context.Messages.Include(s => s.Sender).OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == id).ToListAsync();
+            msgs = await _context.Message.Include(s=>s.Sender).OrderByDescending(i => i.TimeSent).Where(m => m.request.ApplicationUserId == id).ToListAsync();
          
             if (msgs == null)
             {
@@ -50,6 +51,9 @@ namespace JPWeb.UI.Pages.Messages
         }
         public async Task<IActionResult> OnPostAsync(int? id)
         {
+            msgs = await _context.Message.Include(s => s.Sender).OrderByDescending(i => i.TimeSent).Where(m => m.request.ApplicationUserId == user_id).ToListAsync();
+            var user_email = msgs.FirstOrDefault().Sender.Email;
+
             SmtpClient client = new SmtpClient
             {
                 Port = 587,
@@ -60,9 +64,9 @@ namespace JPWeb.UI.Pages.Messages
                 UseDefaultCredentials = false,
                 Credentials = new System.Net.NetworkCredential("THEPRE.S.Q.L@gmail.com", "CST3162018")
             };
-
+            
             //at the moment the users name is set as their email
-            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", User.Identity.Name, "3D Print Club", newMsg.Body.ToString())
+            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", user_email, "3D Print Club", newMsg.Body.ToString())
             {
                 BodyEncoding = Encoding.UTF8,
                 DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure

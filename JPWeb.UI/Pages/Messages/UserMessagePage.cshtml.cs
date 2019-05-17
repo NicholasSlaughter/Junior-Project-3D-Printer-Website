@@ -45,7 +45,7 @@ namespace JPWeb.UI.Pages.Messages
             }
             
 
-            msgs = await _context.Message.Include(s=>s.Sender).OrderByDescending(i => i.ID).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
+            msgs = await _context.Message.Include(s=>s.Sender).OrderByDescending(i => i.TimeSent).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
 
             if (msgs == null)
             {
@@ -67,7 +67,7 @@ namespace JPWeb.UI.Pages.Messages
             };
 
             //at the moment the users name is set as their email
-            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", User.Identity.Name, "3D Print Club", newMsg.Body.ToString())
+            MailMessage message = new MailMessage(User.Identity.Name, "OregonTech3DPrintClub@donotreply.com", "3D Print Club", newMsg.Body.ToString())
             {
                 BodyEncoding = Encoding.UTF8,
                 DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
