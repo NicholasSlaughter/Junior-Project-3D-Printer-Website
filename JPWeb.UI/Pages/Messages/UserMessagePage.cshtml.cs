@@ -45,7 +45,11 @@ namespace JPWeb.UI.Pages.Messages
             }
             
 
+<<<<<<< HEAD
             msgs = await _context.Message.Include(s=>s.Sender).OrderByDescending(i => i.TimeSent).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
+=======
+            msgs = await _context.Messages.Include(m=>m.Sender).OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
+>>>>>>> origin/ApiController
 
             if (msgs == null)
             {
@@ -67,7 +71,11 @@ namespace JPWeb.UI.Pages.Messages
             };
 
             //at the moment the users name is set as their email
+<<<<<<< HEAD
             MailMessage message = new MailMessage(User.Identity.Name, "OregonTech3DPrintClub@donotreply.com", "3D Print Club", newMsg.Body.ToString())
+=======
+            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", "THEPRE.S.Q.L@gmail.com", "3D Print Club", newMsg.Body.ToString())
+>>>>>>> origin/ApiController
             {
                 BodyEncoding = Encoding.UTF8,
                 DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure

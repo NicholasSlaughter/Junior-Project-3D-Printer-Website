@@ -4,8 +4,21 @@
 @{
     ViewData["Title"] = "Create";
 }
+@using JPWeb.UI.Utilities
 
-<h2>Create</h2>
+@{System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
+    if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
+    {
+        <br />
+        <br />
+        <br />
+        <h2>Create</h2>
+    }
+    else
+    {
+        <h2>Create</h2>
+    }
+}
 
 <h4>Requests</h4>
 <hr />
@@ -31,7 +44,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Requests.ProjectDescript" class="control-label"></label>
-                <input asp-for="Requests.ProjectDescript" class="form-control" style="height: 100px"/>
+                <input asp-for="Requests.ProjectDescript" class="form-control" style="height: 100px" />
                 <span asp-validation-for="Requests.ProjectDescript" class="text-danger"></span>
             </div>
             <div class="form-group">
