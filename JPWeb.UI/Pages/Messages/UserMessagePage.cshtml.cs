@@ -12,9 +12,11 @@ using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JPWeb.UI.Pages.Messages
 {
+    [Authorize]
     public class UserMessagePage : PageModel
     {
 
@@ -43,7 +45,7 @@ namespace JPWeb.UI.Pages.Messages
             }
             
 
-            msgs = await _context.Message.OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
+            msgs = await _context.Message.OrderByDescending(i => i.ID).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
 
             if (msgs == null)
             {

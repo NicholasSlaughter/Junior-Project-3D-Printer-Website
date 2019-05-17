@@ -10,9 +10,11 @@ using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JPWeb.UI.Pages.Messages
 {
+    [Authorize]
     public class AdminMessagePage : PageModel
     {
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
@@ -38,7 +40,7 @@ namespace JPWeb.UI.Pages.Messages
             }
             user_id = id;
         
-            msgs = await _context.Message.Include(s=>s.Sender).OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == id).ToListAsync();
+            msgs = await _context.Message.Include(s=>s.Sender).OrderByDescending(i => i.ID).Where(m => m.request.ApplicationUserId == id).ToListAsync();
          
             if (msgs == null)
             {
