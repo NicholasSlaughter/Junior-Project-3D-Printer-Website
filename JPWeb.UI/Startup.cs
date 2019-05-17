@@ -52,8 +52,8 @@ namespace JPWeb.UI
 
             services.AddMvc();
 
-            services.AddTransient<UserManager<ApplicationUser>>();
-            services.AddTransient<ApplicationDbContext>();
+          //  services.AddTransient<UserManager<ApplicationUser>>();
+            //services.AddTransient<ApplicationDbContext>();
 
             services.AddAuthorization(options =>
             {
@@ -97,7 +97,7 @@ namespace JPWeb.UI
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            app.UseIdentity();
+           // app.UseIdentity();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

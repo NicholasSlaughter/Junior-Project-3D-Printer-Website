@@ -64,15 +64,8 @@ namespace JPWeb.UI.Pages.Messages
                 UseDefaultCredentials = false,
                 Credentials = new System.Net.NetworkCredential("THEPRE.S.Q.L@gmail.com", "CST3162018")
             };
-<<<<<<< HEAD
-            
-            //at the moment the users name is set as their email
+
             MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", user_email, "3D Print Club", newMsg.Body.ToString())
-=======
-            var userToEmail = _userManager.Users.Where(u => u.Id == user_id).SingleOrDefault();
-            //at the moment the users name is set as their email
-            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", userToEmail.Email, "3D Print Club", newMsg.Body.ToString())
->>>>>>> origin/ApiController
             {
                 BodyEncoding = Encoding.UTF8,
                 DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
