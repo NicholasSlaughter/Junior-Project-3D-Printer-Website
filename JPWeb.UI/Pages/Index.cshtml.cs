@@ -22,7 +22,7 @@ namespace JPWeb.UI.Pages
 
         public async Task OnGetAsync()
         {
-            //test12
+            //test123
             Printer = await _context.Printers.ToListAsync();
         }
     }

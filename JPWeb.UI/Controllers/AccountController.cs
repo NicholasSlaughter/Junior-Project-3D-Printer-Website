@@ -22,7 +22,7 @@ namespace JPWeb.UI.Controllers
         // POST api/Account/Register
         [System.Web.Http.AllowAnonymous]
         [Microsoft.AspNetCore.Mvc.Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Register([Microsoft.AspNetCore.Mvc.FromBody]  RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
             {
