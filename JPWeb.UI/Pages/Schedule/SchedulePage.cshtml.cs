@@ -11,36 +11,27 @@ namespace JPWeb.UI.Pages.Schedule
 {
     public class SchedulePageModel : PageModel
     {
-        private readonly JPWeb.UI.Data.ApplicationDbContext _context;
+        [BindProperty]
+        public DateTime TimeRequested { get; set; }
+        public IList<Printer> Printer { get; set; }
+        public IList<Request> Requests { get; set; }
 
-        public SchedulePageModel(JPWeb.UI.Data.ApplicationDbContext context)
+        private readonly Data.ApplicationDbContext _context;
+
+        public SchedulePageModel(Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IList<Printer> Printer { get; set; }
-        public string _________________;
-        public IList<Request> Requests { get; set; }
-
-        [BindProperty]
-        public DateTime TimeRequested { get; set; }
         public async Task OnGetAsync(DateTime timeRequested)
         {
-            if (timeRequested == DateTime.MinValue)
-            {
-                TimeRequested = DateTime.Now;
-                Printer = await _context.Printer.ToListAsync();
-                Requests = await _context.Request.Where(r => r.DateRequested.DayOfYear.Equals(timeRequested.DayOfYear)).Where(c => c.Status.Name.Equals("Approved")).ToListAsync();
-            }
-            else
-            {
-                TimeRequested = DateTime.Now;
-                TimeRequested = timeRequested;
-                Printer = await _context.Printer.ToListAsync();
-                Requests = await _context.Request.Where(r => r.DateRequested.DayOfYear.Equals(timeRequested.DayOfYear)).Where(c => c.Status.Name.Equals("Approved")).ToListAsync();
-            }
+            TimeRequested = timeRequested == DateTime.MinValue ? DateTime.Now : timeRequested;
+
+            Printer  = await _context.Printer.ToListAsync();
+            Requests = await _context.Request.Where(r => r.DateRequested.DayOfYear.Equals(timeRequested.DayOfYear)).Where(c => c.Status.Name.Equals("Approved")).ToListAsync();
 
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
             return  RedirectToPage("/Schedule/SchedulePage", new { TimeRequested = TimeRequested });

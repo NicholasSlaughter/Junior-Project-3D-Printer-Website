@@ -65,13 +65,7 @@
                         {
                             <li><a asp-page="/Messages/UserMessagePage">Messages</a></li>
                         }
-                    }
-                    @{ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user) == false)
-                        {
-                            <li><a asp-page="/Contact">Contact</a></li>
-                            <li><a asp-page="/About">About</a></li>
-                        } }
-
+                    }                    
                 </ul>
 
             </div>
@@ -84,7 +78,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2019 - 3D Print Club</p>
+            <p>&copy; Copyright @DateTime.Now.Year - 3D Print Club</p>
         </footer>
     </div>
 

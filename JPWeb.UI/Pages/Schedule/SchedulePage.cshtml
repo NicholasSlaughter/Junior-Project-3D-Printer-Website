@@ -1,86 +1,51 @@
 ﻿@page
 @using JPWeb.UI.Utilities
-
 @model JPWeb.UI.Pages.Schedule.SchedulePageModel
 @{
     ViewData["Title"] = "Schedule";
 }
 
-@{System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
-    if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
-    {
-        <br />
-        <br />
-        <br />
-        <h2>Schedule For Date:</h2>
-    }
-    else
-    {
-        <h2>Schedule For Date:</h2>
-    }
-}
+<h2 style="display: inline-block;">Schedule For Date:</h2>
 
-<form method="post">
+<form method="post" style="display: inline-block;">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group">
+
+    <div class="form-group" style="display: inline-block;">
         <input asp-for="TimeRequested" class="form-control" />
         <span asp-validation-for="TimeRequested" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="display: inline-block;">
         <input type="submit" value="Check" class="btn btn-default" />
     </div>
 </form>
 
-<table class="table">
-    <tbody>
-        @foreach (var _printer in Model.Printer)
-        {
-        <thead>
+@foreach (var _printer in Model.Printer)
+{
+    <u><h1>@Html.DisplayFor(modelItem => _printer.Name)</h1></u>
+
+    <br/>
+
+    <table class="table">
+        <tbody>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Printer)
-                </th>
+                <th>@Html.DisplayNameFor(model => model.Requests[0].ProjectName)</th>
+                <th>@Html.DisplayNameFor(model => model.Requests[0].Duration)</th>
+                <th>@Html.DisplayNameFor(model => model.Requests[0].DateRequested)</th>
             </tr>
-        </thead>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => _printer.Name)
-            </td>
-        </tr>
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Requests[0].ProjectName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Requests[0].Duration)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Requests[0].DateRequested)
-                </th>
-            </tr>
-        </thead>
-        <tr>
+
             @foreach (var _request in Model.Requests.Where(r => r.printer == _printer))
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => _request.ProjectName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => _request.Duration)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => _request.DateRequested)
-                </td>
-
-
-            </tr>
-        }
-            </tr>
-
-        }
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => _request.ProjectName)</td>
+                    <td>@Html.DisplayFor(modelItem => _request.Duration)</td>
+                    <td>@Html.DisplayFor(modelItem => _request.DateRequested)</td>
+                </tr>
+            }
         </tbody>
     </table>
+
+    <br/>
+    <br/>
+    <br/>
+} 
