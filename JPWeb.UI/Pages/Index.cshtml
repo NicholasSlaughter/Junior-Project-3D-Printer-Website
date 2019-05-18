@@ -2,29 +2,20 @@
 @using JPWeb.UI.Utilities
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
+
+<h2>Printers</h2>
 
 @{System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
-    if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
-    {
-        <br />
-        <br />
-        <br />
-        <h2>Printers</h2>
-    }
-    else
-    {
-        <h2>Printers</h2>
-    }
-}
-
-@{if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
+if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
     {
         <p>
             <a asp-page="Create">Create New Printer</a>
         </p>
-     }}
+    }
+}
+
 <table class="table">
     <thead>
         <tr>

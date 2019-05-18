@@ -4,21 +4,22 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - JPWeb.UI</title>
+    <title>@ViewData["Title"]</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/custom_styles.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />       
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #003868;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -27,53 +28,59 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-page="/Index" class="navbar-brand">3D Print Club</a>
+                <a asp-page="/Index" class="hoverable_button navbar-brand">3D Print Club</a>
             </div>
             <div class="navbar-collapse collapse">
                 <partial name="_LoginPartial" />
                 <ul class="nav navbar-nav">
-                    <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-page="/Schedule/SchedulePage">Schedule</a></li>
-
+                    <li><a class="hoverable_button" asp-page="/Index">Home</a></li>
+                    <li><a class="hoverable_button" asp-page="/Schedule/SchedulePage">Schedule</a></li>
                     @{ System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
                         if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
                         {
-                            <li><a asp-page="/PendingRequests/Index">Pending Requests</a></li>
+                            <li><a class="hoverable_button" asp-page="/PendingRequests/Index">Pending Requests</a></li>
                         }}
                     @{ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
                         {
-                            <li><a asp-page="/ApprovedRequests/Index">Approved Requests</a></li>
+                            <li><a class="hoverable_button" asp-page="/ApprovedRequests/Index">Approved Requests</a></li>
                         } }
                     @{ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
                         {
-                            <li><a asp-page="/DeniedRequests/Index">Denied Requests</a></li>
+                            <li><a class="hoverable_button" asp-page="/DeniedRequests/Index">Denied Requests</a></li>
                         } }
-
-                    <li><a asp-page="/Requests/Create">Make A Request</a></li>
-                    <li><a asp-page="/Requests/Index">View Requests</a></li>
+                    <li><a class="hoverable_button" asp-page="/Requests/Create">Make A Request</a></li>
+                    <li><a class="hoverable_button" asp-page="/Requests/Index">View Submitted Requests</a></li>
                     @{
                         if (AuthorizeHtmlHelper.UserIsSuperAdmin(user))
                         {
-                            <li><a asp-page="/UserManagement/Index">User Management</a></li>
+                            <li><a class="hoverable_button" asp-page="/UserManagement/Index">User Management</a></li>
                         }}
-
                     @{ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
                         {
-                            <li><a asp-page="/Messages/messageHubList">Messages</a></li>
+                            <li><a class="hoverable_button" asp-page="/Messages/messageHubList">Messages</a></li>
                         }
                         else
                         {
-                            <li><a asp-page="/Messages/UserMessagePage">Messages</a></li>
+                            <li><a class="hoverable_button" asp-page="/Messages/UserMessagePage">Messages</a></li>
                         }
-                    }                    
+                    }
                 </ul>
-
             </div>
         </div>
     </nav>
 
+  
+    @if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
+    {
+        <style>
+            body {
+                padding-top: 150px;
+                padding-bottom: 20px;
+            }
+        </style>
+    }
+     
     <partial name="_CookieConsentPartial" />
-
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -81,7 +88,6 @@
             <p>&copy; Copyright @DateTime.Now.Year - 3D Print Club</p>
         </footer>
     </div>
-
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -102,7 +108,6 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

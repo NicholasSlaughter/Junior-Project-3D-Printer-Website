@@ -2,26 +2,13 @@
 @model JPWeb.UI.Pages.Requests.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Make A Request";
 }
 @using JPWeb.UI.Utilities
 
-@{System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
-    if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
-    {
-        <br />
-        <br />
-        <br />
-        <h2>Create</h2>
-    }
-    else
-    {
-        <h2>Create</h2>
-    }
-}
-
-<h4>Requests</h4>
+<h2>Make A Request</h2>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form method="post" enctype="multipart/form-data">
