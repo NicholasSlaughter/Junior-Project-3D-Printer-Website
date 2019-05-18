@@ -26,7 +26,7 @@ namespace JPWeb.UI.Pages.ApprovedRequests
 
         public async Task OnGetAsync()
         {
-            Request = await _context.Requests
+            Request = await _context.Request
                 .Include(r => r.printer)
                 .Include(c => c.Status)
                 .Where(c => c.Status.Name.Equals("Approved")) //Only shows approved requests
@@ -35,7 +35,7 @@ namespace JPWeb.UI.Pages.ApprovedRequests
 
 
         [HttpPost, ActionName("Download")]
-        public ActionResult OnPostDownload(int id)
+        public ActionResult OnPostDownload(string id)
         {
             var Request = _context.GetRequestById(id);
             var file = Request.Result.ProjectFilePath;

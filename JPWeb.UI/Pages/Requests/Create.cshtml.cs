@@ -16,10 +16,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Net;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JPWeb.UI.Pages.Requests
 {
-
+    [Authorize]
     public class CreateModel : PageModel
     {
         public static string ProcessFormFile(IFormFile formFile)
@@ -53,37 +54,25 @@ namespace JPWeb.UI.Pages.Requests
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
-
         [BindProperty]
         public Request Requests { get; set; }
 
         public Message newMsg = new Message();
 
-        //public async Task<IActionResult> OnGetAsync(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> OnGetAsync()
+        {
+            Requests = new Request();
 
-        //    Requests = await _context.Requests
-        //        .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id == id);
+            Requests.StatusId = _context.Status.SingleOrDefault(c => c.Name.Equals("Pending")).Id;
+            Requests.DateRequested = DateTime.Now;
 
-        //    if (Requests == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    //ViewData["PrinterId"] = new SelectList(_context.Printers, "Id", "Name");
-        //    return Page();
-        //}
+            return Page();
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
+
 
             if (!ModelState.IsValid)
             {
@@ -91,12 +80,12 @@ namespace JPWeb.UI.Pages.Requests
             }
 
             Requests.ApplicationUserId = user.Id;
-            Requests.StatusId = _context.Statuses.SingleOrDefault(c => c.Name.Equals("Pending")).Id;
+            
             Requests.DateMade = DateTime.Now;
             Requests.Duration = 120;
             Requests.ProjectFilePath = ProcessFormFile(ProjectFile);
 
-            _context.Requests.Add(Requests);          
+            _context.Request.Add(Requests);          
             //await _context.SaveChangesAsync();
             
             newMsg.Body = "A NEW PROJECT HAS BEEN SUBMITTED";
@@ -104,7 +93,7 @@ namespace JPWeb.UI.Pages.Requests
             newMsg.request = Requests;
             newMsg.Sender = Requests.applicationUser;
             
-             _context.Messages.Add(newMsg);
+             _context.Message.Add(newMsg);
 
             user.LatestMessage = newMsg.TimeSent;
             _context.Users.Update(user);

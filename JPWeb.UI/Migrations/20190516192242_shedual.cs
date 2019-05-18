@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace JPWeb.UI.Data.Migrations
+namespace JPWeb.UI.Migrations
 {
-    public partial class MessagesV2 : Migration
+    public partial class shedual : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

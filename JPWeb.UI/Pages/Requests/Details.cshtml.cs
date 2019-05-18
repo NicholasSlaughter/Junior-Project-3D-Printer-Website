@@ -21,14 +21,14 @@ namespace JPWeb.UI.Pages.Requests
 
         public Request Requests { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            if (id.Equals(null))
             {
                 return NotFound();
             }
 
-            Requests = await _context.Requests.FirstOrDefaultAsync(m => m.Id == id);
+            Requests = await _context.Request.FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Requests == null)
             {

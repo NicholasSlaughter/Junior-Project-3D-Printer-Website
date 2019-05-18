@@ -21,15 +21,15 @@ namespace JPWeb.UI.Pages.DeniedRequests
 
         public Request Request { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            if (id.Equals(null))
             {
                 return NotFound();
             }
 
-            Request = await _context.Requests
-                .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id == id);
+            Request = await _context.Request
+                .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Request == null)
             {

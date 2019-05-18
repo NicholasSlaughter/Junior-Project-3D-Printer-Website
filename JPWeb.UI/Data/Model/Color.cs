@@ -7,7 +7,7 @@ namespace JPWeb.UI.Data.Model
 {
     public class Color
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace JPWeb.UI.Pages.Printers
                 return Page();
             }
 
-            _context.Printers.Add(Printer);
+            _context.Printer.Add(Printer);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

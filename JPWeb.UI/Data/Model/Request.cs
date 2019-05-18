@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,25 +9,27 @@ namespace JPWeb.UI.Data.Model
 {
     public class Request
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string ApplicationUserId { get; set; }
         public ApplicationUser applicationUser { get; set; }
-        public int? PrinterId { get; set; }
+        [Display(Name ="Printer")]
+        public string PrinterId { get; set; }
+        [Display(Name = "Printer")]
         public Printer printer { get; set; }
-        [Required]
-        public int StatusId { get; set; }
+        [Required, Display(Name = "Status")]
+        public string StatusId { get; set; }
         public Status Status { get; set; }
-        [Required]
+        [Required, Display(Name = "Project Name")]
         public string ProjectName { get; set; }
-
+        [Display(Name = "Project File")]
         public string ProjectFilePath { get; set; }
-        [Required]
+        [Required, DisplayFormat(DataFormatString = "{0:MM/dd/yy hh:mm tt}"), Display(Name = "Date Requested")]
         public DateTime DateRequested { get; set; }
         [Required]
         public DateTime DateMade { get; set; }
-        [Required]
+        [Required, Display(Name = "Project Description")]
         public string ProjectDescript { get; set; }
-        [Required]
+        [Required, Display(Name = "Personal Use?")]
         public bool PersonalUse { get; set; }
         public double Duration { get; set; }
         public ICollection<Message> Messages { get; set; } = new List<Message>();

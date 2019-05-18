@@ -1,23 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace JPWeb.UI.Data.Migrations
+namespace JPWeb.UI.Migrations
 {
-    public partial class MessageV10004 : Migration
+    public partial class MessageIDChange : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "LastedMessage",
-                table: "AspNetUsers",
-                newName: "LatestMessage");
+                name: "MessageId",
+                table: "Message",
+                newName: "ID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "LatestMessage",
-                table: "AspNetUsers",
-                newName: "LastedMessage");
+                name: "ID",
+                table: "Message",
+                newName: "MessageId");
         }
     }
 }

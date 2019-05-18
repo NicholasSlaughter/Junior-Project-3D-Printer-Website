@@ -8,12 +8,12 @@ namespace JPWeb.UI.Data.Model
 {
     public class Printer
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
-        public int StatusId { get; set; }
+        public string StatusId { get; set; }
         public Status Status { get; set; }
         [Required]
-        public int ColorId { get; set; }
+        public string ColorId { get; set; }
         public Color Color { get; set; }
         [MaxLength(50)]
         public string Name { get; set; }

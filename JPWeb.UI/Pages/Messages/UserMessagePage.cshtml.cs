@@ -12,9 +12,11 @@ using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JPWeb.UI.Pages.Messages
 {
+    [Authorize]
     public class UserMessagePage : PageModel
     {
 
@@ -42,8 +44,8 @@ namespace JPWeb.UI.Pages.Messages
 
             }
             
-
-            msgs = await _context.Messages.Include(m=>m.Sender).OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
+            
+            msgs = await _context.Message.Include(s=>s.Sender).OrderByDescending(i => i.TimeSent).Where(m => m.request.ApplicationUserId == user.Id).ToListAsync();
 
             if (msgs == null)
             {
@@ -63,9 +65,9 @@ namespace JPWeb.UI.Pages.Messages
                 UseDefaultCredentials = false,
                 Credentials = new System.Net.NetworkCredential("THEPRE.S.Q.L@gmail.com", "CST3162018")
             };
+            
+            MailMessage message = new MailMessage(User.Identity.Name, "OregonTech3DPrintClub@donotreply.com", "3D Print Club", newMsg.Body.ToString())
 
-            //at the moment the users name is set as their email
-            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", "THEPRE.S.Q.L@gmail.com", "3D Print Club", newMsg.Body.ToString())
             {
                 BodyEncoding = Encoding.UTF8,
                 DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
@@ -81,14 +83,14 @@ namespace JPWeb.UI.Pages.Messages
                 return Page();
             }
 
-            newMsg.request = _context.Requests.Where(r => r.applicationUser.Email == user.Email).LastOrDefault();
+            newMsg.request = _context.Request.Where(r => r.applicationUser.Email == user.Email).LastOrDefault();
             newMsg.requestId = user.Requests.LastOrDefault().Id;
             newMsg.Sender = user;
             newMsg.TimeSent = DateTime.Now;
 
             user.LatestMessage = newMsg.TimeSent;
 
-            _context.Messages.Add(newMsg);
+            _context.Message.Add(newMsg);
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
 

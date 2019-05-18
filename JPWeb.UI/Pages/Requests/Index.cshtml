@@ -1,11 +1,24 @@
 ﻿@page
+@using JPWeb.UI.Utilities
 @model JPWeb.UI.Pages.Requests.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Printer Requests</h2>
+@{System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
+    if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
+    {
+        <br />
+        <br />
+        <br />
+        <h2>Submitted Requests</h2>
+    }
+    else
+    {
+        <h2>Submitted Requests</h2>
+    }
+}
 
 <p>
     <a asp-page="Create">Create New</a>

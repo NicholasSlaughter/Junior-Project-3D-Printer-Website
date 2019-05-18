@@ -10,9 +10,11 @@ using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JPWeb.UI.Pages.Messages
 {
+    [Authorize]
     public class AdminMessagePage : PageModel
     {
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;
@@ -37,8 +39,9 @@ namespace JPWeb.UI.Pages.Messages
 
             }
             user_id = id;
-        
-            msgs = await _context.Messages.Include(s=>s.Sender).OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == id).ToListAsync();
+
+           // msgs = await _context.Messages.Include(s => s.Sender).OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == id).ToListAsync();
+            msgs = await _context.Message.Include(s=>s.Sender).OrderByDescending(i => i.TimeSent).Where(m => m.request.ApplicationUserId == id).ToListAsync();
          
             if (msgs == null)
             {
@@ -48,6 +51,9 @@ namespace JPWeb.UI.Pages.Messages
         }
         public async Task<IActionResult> OnPostAsync(int? id)
         {
+            msgs = await _context.Message.Include(s => s.Sender).OrderByDescending(i => i.TimeSent).Where(m => m.request.ApplicationUserId == user_id).ToListAsync();
+            var user_email = msgs.FirstOrDefault().Sender.Email;
+
             SmtpClient client = new SmtpClient
             {
                 Port = 587,
@@ -58,9 +64,8 @@ namespace JPWeb.UI.Pages.Messages
                 UseDefaultCredentials = false,
                 Credentials = new System.Net.NetworkCredential("THEPRE.S.Q.L@gmail.com", "CST3162018")
             };
-            var userToEmail = _userManager.Users.Where(u => u.Id == user_id).SingleOrDefault();
-            //at the moment the users name is set as their email
-            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", userToEmail.Email, "3D Print Club", newMsg.Body.ToString())
+
+            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", user_email, "3D Print Club", newMsg.Body.ToString())
             {
                 BodyEncoding = Encoding.UTF8,
                 DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
@@ -79,9 +84,9 @@ namespace JPWeb.UI.Pages.Messages
 
             newMsg.Sender = user;
             newMsg.TimeSent = DateTime.Now;
-            newMsg.request = _context.Requests.Where(r => r.ApplicationUserId == user_id).LastOrDefault();
+            newMsg.request = _context.Request.Where(r => r.ApplicationUserId == user_id).LastOrDefault();
 
-            _context.Messages.Add(newMsg);
+            _context.Message.Add(newMsg);
 
             user.LatestMessage = new DateTime(1987, 1, 1);
 

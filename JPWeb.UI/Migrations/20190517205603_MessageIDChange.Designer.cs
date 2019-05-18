@@ -7,17 +7,17 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace JPWeb.UI.Data.Migrations
+namespace JPWeb.UI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190228012044_msgV2")]
-    partial class msgV2
+    [Migration("20190517205603_MessageIDChange")]
+    partial class MessageIDChange
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -43,6 +43,8 @@ namespace JPWeb.UI.Data.Migrations
                     b.Property<string>("Last_Name")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<DateTime>("LatestMessage");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -80,82 +82,90 @@ namespace JPWeb.UI.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("JPWeb.UI.Data.Model.Message", b =>
+            modelBuilder.Entity("JPWeb.UI.Data.Model.Color", b =>
                 {
-                    b.Property<int>("messageId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("CreationDate");
+                    b.Property<string>("Name");
 
-                    b.Property<string>("MessageTitle");
+                    b.HasKey("Id");
 
-                    b.Property<string>("userName")
-                        .HasMaxLength(50);
-
-                    b.HasKey("messageId");
-
-                    b.ToTable("Messages");
+                    b.ToTable("PrintColor");
                 });
 
-            modelBuilder.Entity("JPWeb.UI.Data.Model.msg", b =>
+            modelBuilder.Entity("JPWeb.UI.Data.Model.Message", b =>
                 {
-                    b.Property<int>("msgId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("ID")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("_msg");
+                    b.Property<string>("Body");
 
-                    b.Property<int?>("messageId");
+                    b.Property<string>("SenderId");
 
-                    b.Property<string>("user");
+                    b.Property<DateTime>("TimeSent");
 
-                    b.HasKey("msgId");
+                    b.Property<string>("requestId");
 
-                    b.HasIndex("messageId");
+                    b.HasKey("ID");
 
-                    b.ToTable("msg");
+                    b.HasIndex("SenderId");
+
+                    b.HasIndex("requestId");
+
+                    b.ToTable("Message");
                 });
 
             modelBuilder.Entity("JPWeb.UI.Data.Model.Printer", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Color");
+                    b.Property<string>("ColorId")
+                        .IsRequired();
 
                     b.Property<string>("Name")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Status");
+                    b.Property<string>("StatusId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.ToTable("Printers");
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("Printer");
                 });
 
             modelBuilder.Entity("JPWeb.UI.Data.Model.Request", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ApplicationUserId");
 
-                    b.Property<DateTime>("DateTime");
+                    b.Property<DateTime>("DateMade");
 
-                    b.Property<int?>("PrinterId");
+                    b.Property<DateTime>("DateRequested");
+
+                    b.Property<double>("Duration");
+
+                    b.Property<bool>("PersonalUse");
+
+                    b.Property<string>("PrinterId");
 
                     b.Property<string>("ProjectDescript")
                         .IsRequired();
 
-                    b.Property<byte[]>("ProjectFilePath");
+                    b.Property<string>("ProjectFilePath");
 
                     b.Property<string>("ProjectName")
                         .IsRequired();
 
-                    b.Property<int>("StatusId");
+                    b.Property<string>("StatusId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -165,20 +175,19 @@ namespace JPWeb.UI.Data.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Request");
                 });
 
             modelBuilder.Entity("JPWeb.UI.Data.Model.Status", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("name");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses");
+                    b.ToTable("Status");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -295,16 +304,33 @@ namespace JPWeb.UI.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("JPWeb.UI.Data.Model.msg", b =>
+            modelBuilder.Entity("JPWeb.UI.Data.Model.Message", b =>
                 {
-                    b.HasOne("JPWeb.UI.Data.Model.Message")
-                        .WithMany("MessageBody")
-                        .HasForeignKey("messageId");
+                    b.HasOne("JPWeb.UI.Data.Model.ApplicationUser", "Sender")
+                        .WithMany("Messages")
+                        .HasForeignKey("SenderId");
+
+                    b.HasOne("JPWeb.UI.Data.Model.Request", "request")
+                        .WithMany("Messages")
+                        .HasForeignKey("requestId");
+                });
+
+            modelBuilder.Entity("JPWeb.UI.Data.Model.Printer", b =>
+                {
+                    b.HasOne("JPWeb.UI.Data.Model.Color", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("JPWeb.UI.Data.Model.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JPWeb.UI.Data.Model.Request", b =>
                 {
-                    b.HasOne("JPWeb.UI.Data.Model.ApplicationUser")
+                    b.HasOne("JPWeb.UI.Data.Model.ApplicationUser", "applicationUser")
                         .WithMany("Requests")
                         .HasForeignKey("ApplicationUserId");
 
