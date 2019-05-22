@@ -22,6 +22,8 @@ namespace JPWeb.UI.Pages.ApprovedRequests
 
         [BindProperty]
         public Request Request { get; set; }
+        [TempData]
+        public string previousStatus { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -33,13 +35,17 @@ namespace JPWeb.UI.Pages.ApprovedRequests
             Request = await _context.Request
                 .Include(c => c.Status)
                 .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id.Equals(id));
+            previousStatus = Request.Status.Name;
 
             if (Request == null)
             {
                 return NotFound();
             }
-           ViewData["PrinterId"] = new SelectList(_context.Printer, "Id", "Name");
-            ViewData["StatusId"] = new SelectList(_context.Status.ToList().GetRange(0, 4), "Id", "Name");
+            var statuses = _context.Status.ToList().Where(c => c.Name.Equals("Approved") || c.Name.Equals("Denied")
+                                || c.Name.Equals("Pending") || c.Name.Equals("Printing") || c.Name.Equals("Completed"));
+
+            ViewData["PrinterId"] = new SelectList(_context.Printer, "Id", "Name");
+            ViewData["StatusId"] = new SelectList(statuses, "Id", "Name");
             return Page();
         }
 
@@ -50,7 +56,42 @@ namespace JPWeb.UI.Pages.ApprovedRequests
             //    return Page();
             //}
 
-            _context.Attach(Request).State = EntityState.Modified;
+            var statusPrint = _context.Status.Single(c => c.Name.Equals("Printing")).Id;
+            var statusComplete = _context.Status.Single(c => c.Name.Equals("Completed")).Id;
+            var printerBusy = _context.Status.Single(c => c.Name.Equals("Busy")).Id;
+            var printerUnavailable = _context.Status.Single(c => c.Name.Equals("Unavailable")).Id;
+            var printer = _context.Printer.Single(c => c.Id.Equals(Request.PrinterId));
+
+            var temp = TempData.Peek("previousStatus");
+
+            if (Request.StatusId.Equals(statusPrint) &&
+                (printer.StatusId.Equals(printerBusy) || printer.StatusId.Equals(printerUnavailable)))
+            {
+                ViewData["ErrorMessage"] = "Printer is busy";
+
+                var statuses = _context.Status.ToList().Where(c => c.Name.Equals("Approved") || c.Name.Equals("Denied")
+                                    || c.Name.Equals("Pending") || c.Name.Equals("Printing") || c.Name.Equals("Completed"));
+
+                ViewData["PrinterId"] = new SelectList(_context.Printer, "Id", "Name");
+                ViewData["StatusId"] = new SelectList(statuses, "Id", "Name");
+                return Page();
+            }
+            else if (Request.StatusId.Equals(statusPrint))
+            {
+                printer.StatusId = _context.Status.Single(c => c.Name.Equals("Busy")).Id;
+
+                _context.Attach(Request).State = EntityState.Modified;
+            }
+            else if(Request.StatusId.Equals(statusComplete) && printer.StatusId.Equals(printerBusy) && temp.Equals("Printing"))
+            {
+                printer.StatusId = _context.Status.Single(c => c.Name.Equals("Available")).Id;
+
+                _context.Attach(Request).State = EntityState.Modified;
+            }
+            else
+            {
+                _context.Attach(Request).State = EntityState.Modified;
+            }
 
             try
             {

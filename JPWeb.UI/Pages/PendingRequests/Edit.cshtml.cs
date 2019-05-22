@@ -38,8 +38,12 @@ namespace JPWeb.UI.Pages.PendingRequests
             {
                 return NotFound();
             }
-           ViewData["PrinterId"] = new SelectList(_context.Printer, "Id", "Name");
-           ViewData["StatusId"] = new SelectList(_context.Status.ToList().GetRange(0,4), "Id", "Name");
+            var statuses = _context.Status.ToList().Where(c => c.Name.Equals("Approved") || c.Name.Equals("Denied")
+                                || c.Name.Equals("Pending"));
+            //test
+
+            ViewData["PrinterId"] = new SelectList(_context.Printer, "Id", "Name");
+            ViewData["StatusId"] = new SelectList(statuses, "Id", "Name");
             return Page();
         }
 

@@ -38,8 +38,11 @@ namespace JPWeb.UI.Pages.DeniedRequests
             {
                 return NotFound();
             }
-           ViewData["PrinterId"] = new SelectList(_context.Printer, "Id", "Id");
-           ViewData["StatusId"] = new SelectList(_context.Status, "Id", "name");
+            var statuses = _context.Status.ToList().Where(c => c.Name.Equals("Approved") || c.Name.Equals("Denied")
+                                || c.Name.Equals("Pending"));
+
+            ViewData["PrinterId"] = new SelectList(_context.Printer, "Id", "Name");
+            ViewData["StatusId"] = new SelectList(statuses, "Id", "Name");
             return Page();
         }
 
