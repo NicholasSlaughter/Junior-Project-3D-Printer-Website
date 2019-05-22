@@ -42,7 +42,7 @@ namespace JPWeb.UI.Pages.Requests
             return contents;
         }
 
-        [BindProperty, Required, DisplayName("Project File Path"), FileExtensions(fileExtensions: "txt", ErrorMessage = "The file must be a txt.")]
+        [BindProperty, Required, DisplayName("Project File Path"), FileExtensions(fileExtensions: "stl", ErrorMessage = "File must be an stl model file.")]
         public IFormFile ProjectFile { get; set; }
 
         private readonly JPWeb.UI.Data.ApplicationDbContext _context;

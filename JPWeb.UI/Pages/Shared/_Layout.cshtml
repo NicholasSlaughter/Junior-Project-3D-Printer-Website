@@ -69,7 +69,7 @@
         </div>
     </nav>
 
-  
+
     @if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
     {
         <style>
@@ -77,9 +77,15 @@
                 padding-top: 150px;
                 padding-bottom: 20px;
             }
+
+            @@media screen and (max-width : 767px) {
+                body {
+                    padding-top: 50px;
+                }
+            }
         </style>
     }
-     
+
     <partial name="_CookieConsentPartial" />
     <div class="container body-content">
         @RenderBody()
