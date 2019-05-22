@@ -19,10 +19,17 @@ namespace JPWeb.UI.Pages
         }
 
         public IList<Printer> Printer { get; set; }
+        public IList<Request> Requests { get; set; }
 
         public async Task OnGetAsync()
         {
-            Printer = await _context.Printer.ToListAsync();
+            Printer = await _context.Printer
+                .Include(p => p.Color)
+                .Include(p => p.Status).ToListAsync();
+
+            Requests = _context.Request
+                .Include(r => r.Status)
+                .ToList();
         }
     }
 }

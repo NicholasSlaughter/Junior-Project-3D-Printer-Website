@@ -28,28 +28,55 @@ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
             <th>
                 @Html.DisplayNameFor(model => model.Printer[0].Color)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requests[0].ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requests[0].Duration)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Printer)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color.Name)
+            </td>
+            <td>
+                @{ var job = Model.Requests.ToList().SingleOrDefault(c => c.PrinterId.Equals(item.Id)
+                    && c.Status.Name.Equals("Printing"));
+                    if (job != null)
+                    {
+                        @Html.Raw(job.ProjectName);
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (job != null)
+                    {
+                        @Html.Raw(job.Duration);
+                    }
+                }
+            </td>
+            @{ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
+                {
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
+            }
+        </tr>
         }
     </tbody>
 </table>

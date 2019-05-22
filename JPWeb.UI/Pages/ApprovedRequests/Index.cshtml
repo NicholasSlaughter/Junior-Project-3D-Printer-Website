@@ -35,36 +35,36 @@
     <tbody>
         @foreach (var item in Model.Request)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.printer.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.ProjectFilePath)
-        </td>*@
-            <td>
-                <form asp-page-handler="Download" asp-route-id="@item.Id" method="post">
-                    <button class="btn btn-default">Download</button>
-                </form>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateRequested)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectDescript)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.printer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.ProjectFilePath)
+                    </td>*@
+                <td>
+                    <form asp-page-handler="Download" asp-route-id="@item.Id" method="post">
+                        <button class="btn btn-default">Download</button>
+                    </form>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateRequested)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectDescript)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
