@@ -2,6 +2,11 @@
 
 namespace JPWeb.UI.Controllers
 {
+    public class LoginBindingModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
     public class RegisterBindingModel
     {
         [Required]

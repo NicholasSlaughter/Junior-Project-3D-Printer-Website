@@ -33,6 +33,7 @@ namespace JPWeb.UI.Controllers
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Last_Name = model.LastName, First_Name = model.FirstName };
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            
 
             if (!result.Succeeded)
             {
@@ -40,6 +41,35 @@ namespace JPWeb.UI.Controllers
             }
 
             return Ok();
+        }
+
+        [System.Web.Http.AllowAnonymous]
+        [Microsoft.AspNetCore.Mvc.Route("Login")]
+        public async Task<IHttpActionResult> Login([Microsoft.AspNetCore.Mvc.FromBody]  LoginBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+
+                return BadRequest(ModelState);
+            }
+
+
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email};
+
+            bool IsApproved = await _userManager.CheckPasswordAsync(user, model.Password);
+ 
+            
+
+            if (!IsApproved)
+            {
+                return NotFound();
+            }
+            else
+            {
+
+                return Ok();
+            }
+
         }
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
