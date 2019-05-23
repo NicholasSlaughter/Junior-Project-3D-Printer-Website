@@ -30,12 +30,20 @@ namespace JPWeb.UI.Pages.Printers
                 return NotFound();
             }
 
-            Printer = await _context.Printer.FirstOrDefaultAsync(m => m.Id.Equals(id));
+            Printer = await _context.Printer
+                .Include(p => p.Color)
+                .Include(p => p.Status).FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Printer == null)
             {
                 return NotFound();
             }
+
+            var statuses = _context.Status.ToList().Where(c => c.Name.Equals("Busy") || c.Name.Equals("Available")
+            || c.Name.Equals("Unavailable"));
+
+            ViewData["ColorId"] = new SelectList(_context.Set<Color>(), "Id", "Name");
+            ViewData["StatusId"] = new SelectList(statuses, "Id", "Name");
             return Page();
         }
 

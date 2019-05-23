@@ -29,7 +29,7 @@ namespace JPWeb.UI.Pages.ApprovedRequests
             Request = await _context.Request
                 .Include(r => r.printer)
                 .Include(c => c.Status)
-                .Where(c => c.Status.Name.Equals("Approved")) //Only shows approved requests
+                .Where(c => c.Status.Name.Equals("Approved") || c.Status.Name.Equals("Printing")) //Only shows approved and printing requests
                 .ToListAsync();
         }
 

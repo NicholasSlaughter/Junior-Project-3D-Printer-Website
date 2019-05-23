@@ -9,10 +9,10 @@ namespace JPWeb.UI.Data.Model
     public class Printer
     {
         public string Id { get; set; }
-        [Required]
+        [Required, Display(Name = "Status")]
         public string StatusId { get; set; }
         public Status Status { get; set; }
-        [Required]
+        [Required, Display(Name = "Color")]
         public string ColorId { get; set; }
         public Color Color { get; set; }
         [MaxLength(50)]
