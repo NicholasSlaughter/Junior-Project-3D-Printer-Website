@@ -45,19 +45,31 @@ namespace JPWeb.UI.Controllers
 
         [System.Web.Http.AllowAnonymous]
         [Microsoft.AspNetCore.Mvc.Route("Login")]
-        public async Task<bool> Login([Microsoft.AspNetCore.Mvc.FromBody]  LoginBindingModel model)
+        public async Task<IHttpActionResult> Login([Microsoft.AspNetCore.Mvc.FromBody]  LoginBindingModel model)
         {
             if (!ModelState.IsValid)
             {
 
-                return false;
+                return BadRequest(ModelState);
             }
+
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email};
 
-            bool result = await _userManager.CheckPasswordAsync(user, model.Password);
+            bool IsApproved = await _userManager.CheckPasswordAsync(user, model.Password);
+ 
+            
 
-            return result;
+            if (!IsApproved)
+            {
+                return NotFound();
+            }
+            else
+            {
+
+                return Ok();
+            }
+
         }
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
