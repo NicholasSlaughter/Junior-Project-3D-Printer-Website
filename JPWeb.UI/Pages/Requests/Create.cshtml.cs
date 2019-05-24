@@ -63,6 +63,8 @@ namespace JPWeb.UI.Pages.Requests
         {
             Requests = new Request();
 
+            ViewData["PrinterId"] = new SelectList(_context.Printer, "Id", "Name");
+
             Requests.StatusId = _context.Status.SingleOrDefault(c => c.Name.Equals("Pending")).Id;
             Requests.DateRequested = DateTime.Now;
 
@@ -91,9 +93,9 @@ namespace JPWeb.UI.Pages.Requests
             newMsg.Body = "A NEW PROJECT HAS BEEN SUBMITTED";
             newMsg.TimeSent = DateTime.Now;
             newMsg.request = Requests;
-            newMsg.Sender = Requests.applicationUser;
-            
-             _context.Message.Add(newMsg);
+            newMsg.Sender = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
+
+            _context.Message.Add(newMsg);
 
             user.LatestMessage = newMsg.TimeSent;
             _context.Users.Update(user);

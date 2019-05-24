@@ -76,12 +76,14 @@ namespace JPWeb.UI.Pages.Messages
             //msgs = await _context.Messages.OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user_id).ToListAsync();
             //MessageHub = await _context.Messages
             //     .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
-            _context.Users.Attach(user);
+           
             //if (!ModelState.IsValid)
             //{
             //    return Page();
             //}
 
+            //_context.Dispose();
+            //_context.Users.Attach(user);
             newMsg.Sender = user;
             newMsg.TimeSent = DateTime.Now;
             newMsg.request = _context.Request.Where(r => r.ApplicationUserId == user_id).LastOrDefault();
@@ -89,8 +91,15 @@ namespace JPWeb.UI.Pages.Messages
             _context.Message.Add(newMsg);
 
             user.LatestMessage = new DateTime(1987, 1, 1);
+            try
+            {
+                await _context.SaveChangesAsync();
 
-            await _context.SaveChangesAsync();
+            } catch (Exception e)
+            {
+                _context.Users.Attach(user);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToPage("/Messages/AdminMessagePage", new { id = user_id });
         }

@@ -21,6 +21,10 @@ namespace JPWeb.UI.Pages.Printers
 
         public IActionResult OnGet()
         {
+            var statuses = _context.Status.ToList().Where(c => c.Name.Equals("Available") || c.Name.Equals("Busy")
+                                || c.Name.Equals("Unavailable"));
+            ViewData["ColorId"] = new SelectList(_context.PrintColor, "Id", "Name");
+            ViewData["StatusId"] = new SelectList(statuses, "Id", "Name");
             return Page();
         }
 
