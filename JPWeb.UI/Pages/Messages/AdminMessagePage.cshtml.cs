@@ -76,7 +76,7 @@ namespace JPWeb.UI.Pages.Messages
             //msgs = await _context.Messages.OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user_id).ToListAsync();
             //MessageHub = await _context.Messages
             //     .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
-
+            _context.Users.Attach(user);
             //if (!ModelState.IsValid)
             //{
             //    return Page();

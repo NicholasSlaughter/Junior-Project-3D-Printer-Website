@@ -84,7 +84,7 @@ namespace JPWeb.UI.Pages.Messages
             }
 
             newMsg.request = _context.Request.Where(r => r.applicationUser.Email == user.Email).LastOrDefault();
-            newMsg.requestId = user.Requests.LastOrDefault().Id;
+            //newMsg.requestId = user.Requests.LastOrDefault().Id;
             newMsg.Sender = user;
             newMsg.TimeSent = DateTime.Now;
 
