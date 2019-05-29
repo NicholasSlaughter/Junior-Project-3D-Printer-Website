@@ -13,6 +13,11 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using MailKit;
+using MimeKit;
+using MailKit.Net.Imap;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 
 namespace JPWeb.UI.Pages.Messages
 {
@@ -55,28 +60,32 @@ namespace JPWeb.UI.Pages.Messages
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            SmtpClient client = new SmtpClient
-            {
-                Port = 587,
-                Host = "smtp.gmail.com",
-                EnableSsl = true,
-                Timeout = 10000,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new System.Net.NetworkCredential("THEPRE.S.Q.L@gmail.com", "CST3162018")
-            };
-            
-            MailMessage message = new MailMessage(User.Identity.Name, "OregonTech3DPrintClub@donotreply.com", "3D Print Club", newMsg.Body.ToString())
-
-            {
-                BodyEncoding = Encoding.UTF8,
-                DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
-            };
-
-            client.Send(message);
 
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
-            
+
+            var message = new MimeMessage();
+            message.Subject = "AUTOMATED MESSAGE - DO NOT REPLY";
+
+            message.To.Add(new MailboxAddress(string.Concat("Admin"), "THEPRE.S.Q.L@gmail.com"));
+            message.From.Add(new MailboxAddress(string.Concat(user.First_Name + " " + user.Last_Name), user.Email));
+
+
+            var builder = new BodyBuilder();
+            builder.TextBody = newMsg.Body;
+            message.Body = builder.ToMessageBody();
+            try
+            {
+                var client = new MailKit.Net.Smtp.SmtpClient();
+                client.ServerCertificateValidationCallback = (s, c, ch, e) => true;
+                client.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+                client.Authenticate("THEPRE.S.Q.L@gmail.com", "CST3162018");
+                client.Send(message);
+                client.Disconnect(true);
+            }
+            catch (Exception e)
+            {
+
+            }
 
             if (!ModelState.IsValid)
             {
