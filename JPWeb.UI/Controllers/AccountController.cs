@@ -34,8 +34,7 @@ namespace JPWeb.UI.Controllers
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Last_Name = model.LastName, First_Name = model.FirstName };
 
-            IdentityResult result = await _userManager.CreateAsync(user, model.
-                );
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             
 
             if (!result.Succeeded)
@@ -67,12 +66,12 @@ namespace JPWeb.UI.Controllers
             {
                 return NotFound();
             }
-            else
+            else if(IsApproved ==null)
             {
-
-                return Ok();
+                return InternalServerError();
             }
 
+            return Ok();
         }
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
