@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;
+using System.Security.Claims;
 
 namespace JPWeb.UI.Controllers
 {
@@ -44,7 +45,7 @@ namespace JPWeb.UI.Controllers
 
             return Ok();
         }
-
+        
         [System.Web.Http.AllowAnonymous]
         [Microsoft.AspNetCore.Mvc.Route("Login")]
         public async Task<IHttpActionResult> Login([Microsoft.AspNetCore.Mvc.FromBody]  LoginBindingModel model)

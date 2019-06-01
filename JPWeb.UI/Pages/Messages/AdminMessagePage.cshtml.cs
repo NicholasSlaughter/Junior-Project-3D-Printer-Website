@@ -11,6 +11,11 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using MailKit;
+using MimeKit;
+using MailKit.Net.Imap;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 
 namespace JPWeb.UI.Pages.Messages
 {
@@ -52,27 +57,33 @@ namespace JPWeb.UI.Pages.Messages
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             msgs = await _context.Message.Include(s => s.Sender).OrderByDescending(i => i.TimeSent).Where(m => m.request.ApplicationUserId == user_id).ToListAsync();
-            var user_email = msgs.FirstOrDefault().Sender.Email;
 
-            SmtpClient client = new SmtpClient
-            {
-                Port = 587,
-                Host = "smtp.gmail.com",
-                EnableSsl = true,
-                Timeout = 10000,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new System.Net.NetworkCredential("THEPRE.S.Q.L@gmail.com", "CST3162018")
-            };
-
-            MailMessage message = new MailMessage("OregonTech3DPrintClub@donotreply.com", user_email, "3D Print Club", newMsg.Body.ToString())
-            {
-                BodyEncoding = Encoding.UTF8,
-                DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
-            };
-
-            client.Send(message);
+            var user_email = msgs.FirstOrDefault().Sender;
             var user = _userManager.Users.SingleOrDefault(c => c.Email.Equals(User.Identity.Name));
+
+            var message = new MimeMessage();
+            message.Subject = "AUTOMATED MESSAGE - DO NOT REPLY";
+
+            message.To.Add(new MailboxAddress(string.Concat(user_email.First_Name + " " + user_email.Last_Name), user_email.Email));
+            message.From.Add(new MailboxAddress(string.Concat(user.First_Name + " " + user.Last_Name), "THEPRE.S.Q.L@gmail.com"));
+
+
+            var builder = new BodyBuilder();
+            builder.TextBody = newMsg.Body;
+            message.Body = builder.ToMessageBody();
+            try
+            {
+                var client = new MailKit.Net.Smtp.SmtpClient();
+                client.ServerCertificateValidationCallback = (s, c, ch, e) => true;
+                client.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+                client.Authenticate("THEPRE.S.Q.L@gmail.com", "CST3162018");
+                client.Send(message);
+                client.Disconnect(true);
+            }
+            catch (Exception e)
+            {
+
+            }
             //msgs = await _context.Messages.OrderByDescending(i => i.MessageId).Where(m => m.request.ApplicationUserId == user_id).ToListAsync();
             //MessageHub = await _context.Messages
             //     .Include(l => l.Messages).FirstOrDefaultAsync(m => m.messageHubId == id); //dont forget to change me
