@@ -68,11 +68,11 @@ namespace JPWeb.UI.Controllers
             var result = test.VerifyHashedPassword(user, user.PasswordHash, model.Password);
             if(result != 0)
             {
-                return Ok();
+                return NotFound();
             }
             else
             {
-                return Ok("I passed through everything");
+                return InternalServerError();
             }
 
         }
