@@ -58,20 +58,20 @@ namespace JPWeb.UI.Controllers
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email};
 
-            var IsApproved = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            var IsApproved = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
  
             
 
-            if (!IsApproved.Succeeded)
+            if (IsApproved.Succeeded)
             {
-                return NotFound();
+                return Ok();
             }
             else if(IsApproved ==null)
             {
                 return InternalServerError();
             }
 
-            return Ok();
+            return BadRequest();
         }
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
