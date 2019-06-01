@@ -1,5 +1,6 @@
 ﻿using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Identity;
+
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;
@@ -63,14 +64,19 @@ namespace JPWeb.UI.Controllers
                 return InternalServerError();
             }
 
-            var response = await _userManager.CheckPasswordAsync(user, model.Password);
-
-            if(response)
+            var test = new PasswordHasher<ApplicationUser>();
+            var result = test.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+            if(result != 0)
+            {
+                return Ok();
+            }
+            else
             {
                 return Ok("I passed through everything");
             }
-            return BadRequest("I actually failed!");
+
         }
+
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)
