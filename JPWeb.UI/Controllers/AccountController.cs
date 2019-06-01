@@ -13,10 +13,11 @@ namespace JPWeb.UI.Controllers
     {
         
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public AccountController(UserManager<ApplicationUser> userManager)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // POST api/Account/Register
@@ -32,7 +33,8 @@ namespace JPWeb.UI.Controllers
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Last_Name = model.LastName, First_Name = model.FirstName };
 
-            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            IdentityResult result = await _userManager.CreateAsync(user, model.
+                );
             
 
             if (!result.Succeeded)
@@ -56,11 +58,11 @@ namespace JPWeb.UI.Controllers
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email};
 
-            bool IsApproved = await _userManager.CheckPasswordAsync(user, model.Password);
+            var IsApproved = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
  
             
 
-            if (!IsApproved)
+            if (!IsApproved.Succeeded)
             {
                 return NotFound();
             }

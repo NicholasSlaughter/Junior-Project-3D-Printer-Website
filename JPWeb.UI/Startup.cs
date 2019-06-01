@@ -53,6 +53,7 @@ namespace JPWeb.UI
             services.AddMvc();
 
             services.AddTransient<UserManager<ApplicationUser>>();
+            services.AddTransient<SignInManager<ApplicationUser>>();
             services.AddTransient<ApplicationDbContext>();
 
             services.AddAuthorization(options =>
