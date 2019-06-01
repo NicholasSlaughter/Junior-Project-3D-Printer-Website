@@ -58,25 +58,18 @@ namespace JPWeb.UI.Controllers
 
             ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
 
-            if(user == null)
-            {
-                return BadRequest();
-            }
-
-            var IsApproved = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, false);
- 
-            
-
-            if (IsApproved.Succeeded)
-            {
-                return Ok();
-            }
-            else if(IsApproved ==null)
+            if((user.Email != model.Email))
             {
                 return InternalServerError();
             }
 
-            return BadRequest();
+            var response = await _userManager.CheckPasswordAsync(user, model.Password);
+
+            if(response)
+            {
+                return Ok("I passed through everything");
+            }
+            return BadRequest("I actually failed!");
         }
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
