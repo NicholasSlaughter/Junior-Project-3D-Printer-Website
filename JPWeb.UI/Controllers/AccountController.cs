@@ -56,9 +56,14 @@ namespace JPWeb.UI.Controllers
             }
 
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email};
+            ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
 
-            var IsApproved = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+            if(user == null)
+            {
+                return BadRequest();
+            }
+
+            var IsApproved = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, false);
  
             
 
