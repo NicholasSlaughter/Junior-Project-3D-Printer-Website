@@ -1,5 +1,6 @@
 ﻿using JPWeb.UI.Data.Model;
 using Microsoft.AspNetCore.Identity;
+
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;
@@ -14,10 +15,11 @@ namespace JPWeb.UI.Controllers
     {
         
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public AccountController(UserManager<ApplicationUser> userManager)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // POST api/Account/Register
@@ -55,23 +57,26 @@ namespace JPWeb.UI.Controllers
             }
 
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email};
+            ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
 
-            bool IsApproved = await _userManager.CheckPasswordAsync(user, model.Password);
- 
-            
-
-            if (!IsApproved)
+            if((user.Email != model.Email))
             {
-                return NotFound();
+                return InternalServerError();
+            }
+
+            var test = new PasswordHasher<ApplicationUser>();
+            var result = test.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+            if(result != 0)
+            {
+                return Ok("Success");
             }
             else
             {
-
-                return Ok();
+                return Ok("Fail");
             }
 
         }
+
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)
