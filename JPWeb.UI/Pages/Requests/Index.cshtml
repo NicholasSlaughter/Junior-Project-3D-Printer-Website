@@ -43,13 +43,13 @@
                     @Html.DisplayFor(modelItem => item.ProjectName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProjectFilePath)
+                    @item.ProjectFilePath.ToString().TruncateStringAndAddEllipses(20)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DateRequested)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProjectDescript)
+                    @item.ProjectDescript.TruncateStringAndAddEllipses(20)
                 </td>
                 <td>
                     <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
