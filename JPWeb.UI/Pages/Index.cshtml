@@ -8,13 +8,14 @@
 <h2>Printers</h2>
 
 @{System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
-if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
+    if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
     {
         <p>
             <a asp-page="Create">Create New Printer</a>
         </p>
     }
 }
+<hr />
 
 <table class="table">
     <thead>
@@ -27,14 +28,14 @@ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Printer[0].Color)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Requests[0].ProjectName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Requests[0].Duration)
-            </th>
-            <th></th>
+            </th>            
+             <th>
+                 @Html.DisplayNameFor(model => model.Requests[0].ProjectName)
+             </th>         
+             <th>
+                 @Html.DisplayNameFor(model => model.Requests[0].Duration)
+             </th>
+             <th></th>
         </tr>
     </thead>
     <tbody>
@@ -50,6 +51,7 @@ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
             <td>
                 @Html.DisplayFor(modelItem => item.Color.Name)
             </td>
+
             <td>
                 @{ var job = Model.Requests.ToList().SingleOrDefault(c => c.PrinterId.Equals(item.Id)
                     && c.Status.Name.Equals("Printing"));
@@ -69,11 +71,10 @@ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
             </td>
             @{ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
                 {
-                    <td>
-                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
+            <td>                
+                <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>                
+            </td>
                 }
             }
         </tr>

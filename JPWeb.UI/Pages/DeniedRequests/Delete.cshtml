@@ -16,7 +16,7 @@
             @Html.DisplayNameFor(model => model.Request.printer)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Request.printer.Id)
+            @Html.DisplayFor(model => model.Request.printer.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Request.Status)
@@ -29,12 +29,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Request.ProjectName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Request.ProjectFilePath)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Request.ProjectFilePath)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Request.DateRequested)
@@ -52,7 +46,7 @@
     
     <form method="post">
         <input type="hidden" asp-for="Request.Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-page="./Index">Back to List</a>
+        <a class="btn btn-primary" asp-page="./Index">Return to List</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />        
     </form>
 </div>

@@ -6,17 +6,22 @@
 
 
 <h2>User Management</h2>
+<hr />
+
 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
 @if (Model.EditMessage != null)
 {
     <p><h3 style="color: Red">@Model.EditMessage</h3></p>
 }
-<table class="table table-condensed table-bordered">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-    </tr>
+<table class="table ">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
     @if (@Model.Users.Count == 0)
     {
         <tr>

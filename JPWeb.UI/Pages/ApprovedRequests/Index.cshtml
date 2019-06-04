@@ -7,7 +7,7 @@
 
 
 <h2>Approved Requests</h2>
-
+<hr />
 <table class="table">
     <thead>
         <tr>
@@ -45,9 +45,6 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ProjectName)
                 </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.ProjectFilePath)
-                    </td>*@
                 <td>
                     <form asp-page-handler="Download" asp-route-id="@item.Id" method="post">
                         <button class="btn btn-default">Download</button>
@@ -57,12 +54,11 @@
                     @Html.DisplayFor(modelItem => item.DateRequested)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProjectDescript)
+                    @item.ProjectDescript.TruncateStringAndAddEllipses(55)
                 </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <td>                    
+                    <a asp-page="./Edit" class="btn btn-primary" asp-route-id="@item.Id">Edit</a>
+                    <a asp-page="./Details" class="btn btn-success" asp-route-id="@item.Id">Details</a>
                 </td>
             </tr>
         }

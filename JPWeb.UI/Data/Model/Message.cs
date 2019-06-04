@@ -14,6 +14,7 @@ namespace JPWeb.UI.Data.Model
         public Request request { get; set; }
         public string requestId { get; set; }
         public string Body { get; set; }
+        [Display(Name = "Time Sent")]
         public DateTime TimeSent { get; set; }
     }
 }

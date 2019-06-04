@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Request.printer)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Request.printer.Id)
+            @Html.DisplayFor(model => model.Request.printer.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Request.Status)
@@ -28,12 +28,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Request.ProjectName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Request.ProjectFilePath)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Request.ProjectFilePath)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Request.DateRequested)
@@ -50,6 +44,8 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Request.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    
+    <a class="btn btn-primary" asp-page="./Index">Return to List</a>
+    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Request.Id">Edit Request</a>
+
 </div>

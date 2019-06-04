@@ -8,26 +8,14 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Requests</h4>
+    <h4>Request</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Requests.ApplicationUserId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Requests.ApplicationUserId)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Requests.ProjectName)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Requests.ProjectName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Requests.ProjectFilePath)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Requests.ProjectFilePath)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Requests.DateRequested)
@@ -44,6 +32,6 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Requests.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a class="btn btn-primary" asp-page="./Index">Return to List</a>
+    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Requests.Id">Edit Request</a>
 </div>

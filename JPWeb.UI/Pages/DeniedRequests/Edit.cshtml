@@ -15,6 +15,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Request.Id" />
             @Html.HiddenFor(x => x.Request.ApplicationUserId)
+            <input type="hidden" asp-for="Request.ProjectFilePath" />
+
+            @{
+                /*
+                <div class="form-group">
+                    <label asp-for="Request.ProjectFilePath" class="control-label"></label>
+                    <input asp-for="Request.ProjectFilePath" class="form-control" />
+                    @*<span asp-validation-for="Request.ProjectFilePath" class="text-danger"></span>*@
+                </div>
+                */
+            }
             <div class="form-group">
                 <label asp-for="Request.PrinterId" class="control-label"></label>
                 <select asp-for="Request.PrinterId" class="form-control" asp-items="ViewBag.PrinterId"></select>
@@ -31,30 +42,23 @@
                 <span asp-validation-for="Request.ProjectName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Request.ProjectFilePath" class="control-label"></label>
-                <input asp-for="Request.ProjectFilePath" class="form-control" />
-                <span asp-validation-for="Request.ProjectFilePath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Request.DateRequested" class="control-label"></label>
                 <input asp-for="Request.DateRequested" class="form-control" />
                 <span asp-validation-for="Request.DateRequested" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Request.ProjectDescript" class="control-label"></label>
-                <input asp-for="Request.ProjectDescript" class="form-control" />
+                <textarea asp-for="Request.ProjectDescript" class="form-control" style="height: 100px"></textarea>
                 <span asp-validation-for="Request.ProjectDescript" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <a class="btn btn-primary" asp-page="./Index">Return to List</a>
+                <input type="submit" value="Save" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,7 +1,7 @@
 ﻿@page
 @model JPWeb.UI.Pages.Messages.messageHubListModel
 @{
-    ViewData["Title"] = "messageHubList";
+    ViewData["Title"] = "Message Hubs";
 }
 
 
@@ -14,10 +14,10 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProjectName)
+                Last Submitted Project
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastMessage)
+                Time Last Message Sent
             </th>
             <th></th>
         </tr>
@@ -34,10 +34,11 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Sender.LatestMessage)
-
-                    <a asp-page="/Messages/AdminMessagePage" asp-route-id="@item.Sender.Id">Message</a>
-
                 </td>
+                <td>
+                    <a class="btn btn-success" asp-page="/Messages/AdminMessagePage" asp-route-id="@item.Sender.Id">Message</a>
+                </td>
+
             </tr>
         }
     </tbody>
