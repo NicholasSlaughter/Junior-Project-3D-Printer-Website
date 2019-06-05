@@ -50,6 +50,13 @@ namespace JPWeb.UI.Pages.DeniedRequests
 
             if (Request != null)
             {
+                var messagesAssociatedWithRequest = await _context.Message.Where(m => m.requestId == id).ToListAsync();
+
+                foreach (var message in messagesAssociatedWithRequest)
+                {
+                    _context.Message.Remove(message);
+                }
+
                 _context.Request.Remove(Request);
                 await _context.SaveChangesAsync();
             }

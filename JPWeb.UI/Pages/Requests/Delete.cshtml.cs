@@ -46,9 +46,16 @@ namespace JPWeb.UI.Pages.Requests
             }
 
             Requests = await _context.Request.FindAsync(id);
-
+           
             if (Requests != null)
             {
+                var messagesAssociatedWithRequest = await _context.Message.Where(m => m.requestId == id).ToListAsync();
+
+                foreach (var message in messagesAssociatedWithRequest)
+                {
+                    _context.Message.Remove(message);
+                }
+
                 _context.Request.Remove(Requests);
                 await _context.SaveChangesAsync();
             }
