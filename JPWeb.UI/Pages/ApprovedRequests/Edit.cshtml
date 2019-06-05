@@ -27,6 +27,11 @@
                 @ViewData["ErrorMessage"]
             </div>
             <div class="form-group">
+                <label asp-for="Request.Duration" class="control-label"></label>
+                <input asp-for="Request.Duration" class="form-control" />
+                <span asp-validation-for="Request.Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Request.ProjectName" class="control-label"></label>
                 <input asp-for="Request.ProjectName" class="form-control" />
                 <span asp-validation-for="Request.ProjectName" class="text-danger"></span>
@@ -43,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Request.ProjectDescript" class="control-label"></label>
-                <input asp-for="Request.ProjectDescript" class="form-control" style="height: 100px" />
+                <textarea asp-for="Request.ProjectDescript" class="form-control" style="height: 100px"></textarea>
                 <span asp-validation-for="Request.ProjectDescript" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -58,6 +58,7 @@ namespace JPWeb.UI.Pages.ApprovedRequests
 
             var statusPrint = _context.Status.Single(c => c.Name.Equals("Printing")).Id;
             var statusComplete = _context.Status.Single(c => c.Name.Equals("Completed")).Id;
+            var statusApproved = _context.Status.Single(c => c.Name.Equals("Approved")).Id;
             var printerBusy = _context.Status.Single(c => c.Name.Equals("Busy")).Id;
             var printerUnavailable = _context.Status.Single(c => c.Name.Equals("Unavailable")).Id;
             var printer = _context.Printer.Single(c => c.Id.Equals(Request.PrinterId));
@@ -78,11 +79,15 @@ namespace JPWeb.UI.Pages.ApprovedRequests
             }
             else if (Request.StatusId.Equals(statusPrint))
             {
+                Request.TimeDone = DateTime.Now;
+                Request.TimeDone =  Request.TimeDone.AddHours(Request.Duration);
+
                 printer.StatusId = _context.Status.Single(c => c.Name.Equals("Busy")).Id;
 
                 _context.Attach(Request).State = EntityState.Modified;
             }
-            else if(Request.StatusId.Equals(statusComplete) && printer.StatusId.Equals(printerBusy) && temp.Equals("Printing"))
+            else if((Request.StatusId.Equals(statusComplete) || Request.StatusId.Equals(statusApproved))
+                && printer.StatusId.Equals(printerBusy) && temp.Equals("Printing"))
             {
                 printer.StatusId = _context.Status.Single(c => c.Name.Equals("Available")).Id;
 

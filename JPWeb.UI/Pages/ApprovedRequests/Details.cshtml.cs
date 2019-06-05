@@ -29,7 +29,8 @@ namespace JPWeb.UI.Pages.ApprovedRequests
             }
 
             Request = await _context.Request
-                .Include(r => r.printer).FirstOrDefaultAsync(m => m.Id.Equals(id));
+                .Include(r => r.printer)
+                .Include(c => c.Status).FirstOrDefaultAsync(m => m.Id.Equals(id));
 
             if (Request == null)
             {

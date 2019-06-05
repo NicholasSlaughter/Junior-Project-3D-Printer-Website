@@ -32,7 +32,7 @@ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
                 @Html.DisplayNameFor(model => model.Requests[0].ProjectName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Requests[0].Duration)
+                @Html.DisplayNameFor(model => model.Requests[0].TimeDone)
             </th>
             <th></th>
         </tr>
@@ -63,7 +63,7 @@ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
                 @{
                     if (job != null)
                     {
-                        @Html.Raw(job.Duration);
+                        @Html.Raw(job.TimeDone.ToShortTimeString());
                     }
                 }
             </td>
