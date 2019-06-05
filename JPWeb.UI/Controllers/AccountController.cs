@@ -40,10 +40,10 @@ namespace JPWeb.UI.Controllers
 
             if (!result.Succeeded)
             {
-                return GetErrorResult(result);
+                return Ok("Fail");
             }
 
-            return Ok();
+            return Ok("Success");
         }
         
         [System.Web.Http.AllowAnonymous]
@@ -61,7 +61,7 @@ namespace JPWeb.UI.Controllers
 
             if((user.Email != model.Email))
             {
-                return InternalServerError();
+                return Ok("Fail-Email");
             }
 
             var test = new PasswordHasher<ApplicationUser>();
@@ -72,7 +72,7 @@ namespace JPWeb.UI.Controllers
             }
             else
             {
-                return Ok("Fail");
+                return Ok("Fail-Password");
             }
 
         }
