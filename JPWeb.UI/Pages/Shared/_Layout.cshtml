@@ -2,6 +2,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .hoverable_button {
+            color: #FFD101 !important;
+        }
+
+            .hoverable_button:hover {
+                color: #003868 !important;
+                background-color: #FFD101 !important;
+            }
+    </style>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
@@ -9,7 +20,6 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/css/custom_styles.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
