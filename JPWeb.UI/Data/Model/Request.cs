@@ -27,6 +27,8 @@ namespace JPWeb.UI.Data.Model
         public DateTime DateRequested { get; set; }
         [Required]
         public DateTime DateMade { get; set; }
+        [Display(Name = "Time Done")]
+        public DateTime TimeDone { get; set; }
         [Required, Display(Name = "Project Description")]
         public string ProjectDescript { get; set; }
         [Required, Display(Name = "Personal Use?")]
