@@ -65,8 +65,8 @@
                 @{
                     if (job != null)
                     {
-                        @Html.Raw(job.Duration);
-                    }
+                        @Html.Raw(job.TimeDone.ToShortTimeString());
+                }
                 }
             </td>
             @{ if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))

@@ -15,7 +15,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Request.Id" />
             <input type="hidden" asp-for="Request.ProjectFilePath" />
-
+            <input type="hidden" asp-for="Request.PersonalUse" />
             @{
                 /*
                 <div class="form-group">
@@ -47,7 +47,7 @@
                 <label asp-for="Request.DateRequested" class="control-label"></label>
                 <input asp-for="Request.DateRequested" class="form-control" />
                 <span asp-validation-for="Request.DateRequested" class="text-danger"></span>
-            </div>            
+            </div>
             <div class="form-group">
                 <label asp-for="Request.ProjectDescript" class="control-label"></label>
                 <textarea asp-for="Request.ProjectDescript" class="form-control" style="height: 100px"></textarea>

@@ -84,7 +84,7 @@ namespace JPWeb.UI.Pages.Requests
             Requests.ApplicationUserId = user.Id;
             
             Requests.DateMade = DateTime.Now;
-            Requests.Duration = 120;
+            Requests.Duration = 2;
             Requests.ProjectFilePath = ProcessFormFile(ProjectFile);
 
             _context.Request.Add(Requests);          

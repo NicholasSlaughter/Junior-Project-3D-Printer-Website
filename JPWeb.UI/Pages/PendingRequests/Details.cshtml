@@ -28,7 +28,7 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Request.ProjectName)
-        </dd> 
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Request.DateRequested)
         </dt>
@@ -40,6 +40,23 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Request.ProjectDescript)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Request.PersonalUse)
+        </dt>
+        <dd>
+            @{var job = Model.Request.PersonalUse;
+                if (job)
+                {
+                    var outTrue = "Yes";
+                    @Html.Raw(outTrue);
+                }
+                else
+                {
+                    var outFalse = "False";
+                    @Html.Raw(outFalse);
+                }
+            }
         </dd>
     </dl>
 </div>

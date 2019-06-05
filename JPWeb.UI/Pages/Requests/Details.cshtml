@@ -29,9 +29,25 @@
         <dd>
             @Html.DisplayFor(model => model.Requests.ProjectDescript)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Requests.PersonalUse)
+        </dt>
+        <dd>
+            @{var job = Model.Requests.PersonalUse;
+                if (job)
+                {
+                    var outTrue = "Yes";
+                    @Html.Raw(outTrue);
+                }
+                else
+                {
+                    var outFalse = "False";
+                    @Html.Raw(outFalse);
+                }
+            }
+        </dd>
     </dl>
 </div>
 <div>
     <a class="btn btn-primary" asp-page="./Index">Return to List</a>
-    <a class="btn btn-success" asp-page="./Edit" asp-route-id="@Model.Requests.Id">Edit Request</a>
 </div>

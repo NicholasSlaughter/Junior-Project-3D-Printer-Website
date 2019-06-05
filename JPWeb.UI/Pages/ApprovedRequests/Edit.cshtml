@@ -15,6 +15,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Request.Id" />
             <input type="hidden" asp-for="Request.ProjectFilePath" />
+            <input type="hidden" asp-for="Request.PersonalUse" />
 
             @Html.HiddenFor(x => x.Request.ApplicationUserId)
             <div class="form-group">
@@ -48,7 +49,7 @@
                 <textarea asp-for="Request.ProjectDescript" class="form-control" style="height: 100px"></textarea>
                 <span asp-validation-for="Request.ProjectDescript" class="text-danger"></span>
             </div>
-            <div class="form-group">                
+            <div class="form-group">
                 <a class="btn btn-primary" asp-page="./Index">Return to List</a>
                 <input type="submit" value="Save" class="btn btn-success" />
             </div>
