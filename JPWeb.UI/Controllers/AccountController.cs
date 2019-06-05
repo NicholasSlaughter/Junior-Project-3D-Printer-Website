@@ -36,7 +36,6 @@ namespace JPWeb.UI.Controllers
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Last_Name = model.LastName, First_Name = model.FirstName };
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-            
 
             if (!result.Succeeded)
             {
