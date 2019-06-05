@@ -78,6 +78,7 @@ namespace JPWeb.UI.Pages.Requests
 
             if (!ModelState.IsValid)
             {
+                ViewData["PrinterId"] = new SelectList(_context.Printer, "Id", "Name");
                 return Page();
             }
 
@@ -88,7 +89,6 @@ namespace JPWeb.UI.Pages.Requests
             Requests.ProjectFilePath = ProcessFormFile(ProjectFile);
 
             _context.Request.Add(Requests);          
-            //await _context.SaveChangesAsync();
             
             newMsg.Body = "A NEW PROJECT HAS BEEN SUBMITTED";
             newMsg.TimeSent = DateTime.Now;
