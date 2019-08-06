@@ -44,7 +44,7 @@
                 <partial name="_LoginPartial" />
                 <ul class="nav navbar-nav">
                     <li><a class="hoverable_button" asp-page="/Index">Home</a></li>
-                    <li><a class="hoverable_button" asp-page="/Schedule/SchedulePage">Schedule</a></li>
+                    @*<li><a class="hoverable_button" asp-page="/Schedule/SchedulePage">Schedule</a></li>*@
                     @{ System.Security.Claims.ClaimsIdentity user = (System.Security.Claims.ClaimsIdentity)(User.Identity);
                         if (AuthorizeHtmlHelper.UserIsAdminOrHigher(user))
                         {
@@ -59,7 +59,7 @@
                             <li><a class="hoverable_button" asp-page="/DeniedRequests/Index">Denied Requests</a></li>
                         } }
                     <li><a class="hoverable_button" asp-page="/Requests/Create">Make A Request</a></li>
-                    <li><a class="hoverable_button" asp-page="/Requests/Index">View Submitted Requests</a></li>
+                    <li><a class="hoverable_button" asp-page="/Requests/Index">Your Requests</a></li>
                     @{
                         if (AuthorizeHtmlHelper.UserIsSuperAdmin(user))
                         {

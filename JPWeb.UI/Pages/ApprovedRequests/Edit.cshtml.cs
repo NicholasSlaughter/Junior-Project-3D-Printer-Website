@@ -80,6 +80,7 @@ namespace JPWeb.UI.Pages.ApprovedRequests
             else if (Request.StatusId.Equals(statusPrint))
             {
                 Request.TimeDone = DateTime.Now;
+                Request.TimeDone = Request.TimeDone.ToLocalTime();
                 Request.TimeDone =  Request.TimeDone.AddHours(Request.Duration);
 
                 printer.StatusId = _context.Status.Single(c => c.Name.Equals("Busy")).Id;

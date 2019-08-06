@@ -54,9 +54,12 @@
 
             <td>
                 @{ var job = Model.Requests.ToList().SingleOrDefault(c => c.PrinterId.Equals(item.Id)
-                    && c.Status.Name.Equals("Printing"));
+                      && c.Status.Name.Equals("Printing"));
+
                     if (job != null)
                     {
+                        job.DateRequested = job.DateRequested.ToUniversalTime();
+                        job.TimeDone = job.TimeDone.ToUniversalTime();
                         @Html.Raw(job.ProjectName);
                     }
                 }
